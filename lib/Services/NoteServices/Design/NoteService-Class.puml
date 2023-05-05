@@ -1,0 +1,65 @@
+@startuml NoteService - Class
+
+title **NoteService - Class Diagram**
+
+package Services{
+    package NoteServices{
+        interface INoteService{
+            + createPost(): Future<ServiceResult<bool>
+            + getPost(): Future<ServiceResult<List<NoteBO>>>
+        }
+    }
+}
+
+package BOs{
+    package NoteBO{
+        class NoteBO{
+        }
+    }
+}
+
+INoteService --> NoteBO
+
+newpage
+
+title **NoteBO-Class Diagram**
+
+package Pages{
+    package CreatePostScreen{
+        class CreatePostScreenVM{
+            + createNewPost() : Future<void>
+        }
+    }
+}
+
+package Services{
+    package NoteServices{
+        abstract class INoteService{
+            + createPost(): Future<ServiceResult<bool>
+        }
+    }
+}
+
+CreatePostScreenVM --> INoteService
+
+newpage
+title **NoteBO-Class Diagram**
+
+package Pages{
+    package LandingScreen{
+        class LandingScreenVM{
+            + fetchPosts() : Future<void>
+        }
+    }
+}
+
+package Services{
+    package NoteServices{
+        abstract class INoteService{
+            + getPost(): Future<ServiceResult<List<NoteBO>>>
+        }
+    }
+}
+
+LandingScreenVM --> INoteService
+@enduml

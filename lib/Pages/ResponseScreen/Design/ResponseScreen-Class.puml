@@ -1,0 +1,32 @@
+@startuml ResponseScreen - Class
+
+title ResponseScreen - Class Diagram
+
+package Pages{
+    package ResponseScreen{
+        class ResponseScreenModel{
+            + NoteService : INoteService
+            + @showMessage: String
+        }
+        class ResponseScreenVM{
+            + navigateToLandingPage() : void
+        }
+        class ResponseScreen{
+            - _responseScreenVM : ResponseScreenVM
+            + initState() : void
+        }
+    }
+}
+
+package Services{
+    package NoteServices{
+        interface INoteService{
+            + createPost(): Future<ServiceResult<bool>
+        }
+    }
+}
+
+ResponseScreen --> ResponseScreenVM : Uses
+ResponseScreenVM --> ResponseScreenModel : Extends
+ResponseScreenVM --> INoteService : Uses
+@enduml

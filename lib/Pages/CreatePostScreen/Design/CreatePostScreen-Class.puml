@@ -1,0 +1,45 @@
+@startuml CreatePostScreen - Class
+
+title **CreatePostScreen - Class**
+
+package Pages{
+    package CreatePostScreen{
+        class CreatePostScreenModel{
+            + NoteService : INoteService
+            + @listOfPosts : List<NoteBO>
+        }
+        class CreatePostScreenVM{
+            + createNewPost() : Future<void>
+            + navigateBackToLandingScreen() : void
+            + navigateToResponseScreen() : void
+            + onChangetitle(title: String) : void
+            + onChangeDescription(description: String): void
+        }
+        class CreatePostScreen{
+            - _createPostScreenVM : CreatePostScreenVM
+            + initState() : void
+            + dispose() : void
+        }
+    }
+}
+
+package Services{
+    package NoteServices{
+        interface INoteService{
+            + createPost(): Future<ServiceResult<bool>
+        }
+    }
+}
+
+package BOs{
+    package NoteBO{
+        class NoteBO{
+        }
+    }
+}
+
+CreatePostScreenVM --> NoteBO : uses
+CreatePostScreenVM --> INoteService : uses
+CreatePostScreenVM --> CreatePostScreenModel : extends
+CreatePostScreen --> CreatePostScreenVM : uses
+@enduml

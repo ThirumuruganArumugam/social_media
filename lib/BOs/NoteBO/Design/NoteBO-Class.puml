@@ -1,0 +1,64 @@
+@startuml NoteBO-Class Diagram
+
+title **NoteBO-Class Diagram**
+
+package BOs{
+    package NoteBO{
+        class NoteBO{
+            + id : int
+            + title : String
+            + description : String
+            + date : DateTime
+        }
+        class NoteBOExtension{
+            + sortPostByDate() : List<NoteBO>
+        }
+    }
+}
+
+package Pages{
+    package LandingScreen{
+        class LandingScreenVM{
+            + fetchPost(): Future<void>
+        }
+    }
+
+    package CreatePostScreen{
+        class CreatePostScreenVM{
+            + createNewPost() : Future<void>
+        }
+    }
+}
+package Services{
+    package NoteService{
+        interface INoteService{
+            + getPosts() : Future<ServiceResult<List<NoteBO>>>
+            + createPost(): Future<ServiceResult<bool>
+        }
+    }
+}
+
+CreatePostScreenVM --> NoteBO
+INoteService --> NoteBO
+LandingScreenVM --> NoteBO
+NoteBOExtension --> NoteBO
+
+newpage
+title **NoteBOExtension**
+package Pages{
+    package LandingScreen{
+        class LandingScreenVM{
+            + sortPosts() : Future<void>
+        }
+    }
+}
+
+package BOs{
+    package NoteBO{
+        class NoteBOExtension{
+            + sortPostsByDate() : List<NoteBO>
+        }
+    }
+}
+LandingScreenVM --> NoteBOExtension
+@enduml

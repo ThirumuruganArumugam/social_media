@@ -1,0 +1,44 @@
+@startuml Utilities - Class Diagram
+
+title **Utilities - Class Diagram**
+
+package Helpers{
+    package Utilities{
+        class Utilities{
+            + showDate() : DateTime
+        }
+    }
+}
+
+package Pages{
+    package LandingScreen{
+       class LandingScreenVM{
+            + sortUsers(): void
+        }
+    }
+}
+
+LandingScreenVM --> Utilities
+
+newpage
+
+title **Utilities - Class Diagram**
+
+package Helpers{
+    package Utilities{
+        class Utilities{
+            + showDate() : DateTime
+        }
+    }
+}
+
+package Pages{
+    package CreatePostScreen{
+       class CreatePostScreenVM{
+            + addPost(): void
+        }
+    }
+}
+
+CreatePostScreenVM --> Utilities
+@enduml
