@@ -38,8 +38,8 @@ package BOs{
     }
 }
 
-CreatePostScreenVM --> NoteBO : uses
-CreatePostScreenVM --> INoteService : uses
+CreatePostScreenVM --> NoteBO 
+CreatePostScreenVM --> INoteService 
 CreatePostScreenVM --> CreatePostScreenModel : extends
 CreatePostScreen --> CreatePostScreenVM : uses
 @enduml

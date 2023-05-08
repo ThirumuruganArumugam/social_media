@@ -20,6 +20,7 @@ package Pages{
         class LandingScreen{
             - _landingScreenVM : LandingScreenVM
             + initState() : void
+            + dispose(): void
         }
     }
 }
@@ -29,7 +30,7 @@ package BOs{
         class NoteBO{
         }
         class NoteBOExtension{
-            + sortUserDetailsInAsscendingOrderById() : List<NoteBO>
+            + sortPostsByDate() : List<NoteBO>
         }
     }
 }
@@ -44,8 +45,8 @@ package Services{
 
 LandingScreenVM --> LandingScreenModel : Extends
 LandingScreen --> LandingScreenVM: Uses
-LandingScreenVM --> NoteBO : Uses
-NoteBOExtension --> NoteBO : Uses
-LandingScreenVM -> NoteBOExtension : Uses
-LandingScreenVM -> INoteService: Uses
+LandingScreenVM --> NoteBO
+NoteBOExtension --> NoteBO
+LandingScreenVM -> NoteBOExtension
+LandingScreenVM -> INoteService
 @enduml

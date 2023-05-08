@@ -5,7 +5,7 @@ title **NoteService - Class Diagram**
 package Services{
     package NoteServices{
         interface INoteService{
-            + createPost(): Future<ServiceResult<bool>
+            + createPost(): Future<ServiceResult<bool>>
             + getPost(): Future<ServiceResult<List<NoteBO>>>
         }
     }
@@ -34,8 +34,8 @@ package Pages{
 
 package Services{
     package NoteServices{
-        abstract class INoteService{
-            + createPost(): Future<ServiceResult<bool>
+        interface INoteService{
+            + createPost(): Future<ServiceResult<bool>>
         }
     }
 }
@@ -55,7 +55,7 @@ package Pages{
 
 package Services{
     package NoteServices{
-        abstract class INoteService{
+        interface INoteService{
             + getPost(): Future<ServiceResult<List<NoteBO>>>
         }
     }

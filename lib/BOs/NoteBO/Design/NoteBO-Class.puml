@@ -33,7 +33,7 @@ package Services{
     package NoteService{
         interface INoteService{
             + getPosts() : Future<ServiceResult<List<NoteBO>>>
-            + createPost(): Future<ServiceResult<bool>
+            + createPost(): Future<ServiceResult<bool>>
         }
     }
 }
