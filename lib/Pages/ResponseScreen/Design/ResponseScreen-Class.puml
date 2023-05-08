@@ -5,30 +5,19 @@ title ResponseScreen - Class Diagram
 package Pages{
     package ResponseScreen{
         class ResponseScreenModel{
-            + NoteService : INoteService
-            + @showMessage: String
-            + @showStatusCode : String
+            + @message: String
+            + @statusCode : String
         }
         class ResponseScreenVM{
             + navigateToLandingPage() : void
         }
         class ResponseScreen{
             - _responseScreenVM : ResponseScreenVM
-            + initState() : void
             + dispose() : void
-        }
-    }
-}
-
-package Services{
-    package NoteServices{
-        interface INoteService{
-            + createPost(Post: NoteBO): Future<ServiceResult<bool>>
         }
     }
 }
 
 ResponseScreen --> ResponseScreenVM : Uses
 ResponseScreenVM --> ResponseScreenModel : Extends
-ResponseScreenVM --> INoteService : Uses
 @enduml

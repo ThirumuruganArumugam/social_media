@@ -13,7 +13,7 @@ package Pages{
             + @errorMessage: String
         }
         class LandingScreenVM{
-            + fetchAllUsers(): Future<void>
+            + fetchPosts(): Future<void>
             + sortUsers(): void
             + navigateToCreatePostScreen() : void
         }
@@ -38,7 +38,7 @@ package BOs{
 package Services{
     package NoteService{
         interface INoteService{
-            + getPost(): Future<ServiceResult<List<NoteBO>>>
+            + getPosts(): Future<ServiceResult<List<NoteBO>>>
         }
     }
 }

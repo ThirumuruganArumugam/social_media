@@ -10,15 +10,14 @@ package Helpers{
     }
 }
 
-package Pages{
-    package LandingScreen{
-       class LandingScreenVM{
-            + sortUsers(): void
+package BOs{
+    package NoteBO{
+        class NoteBOExtension{
+            + sortPostsByDate() : List<NoteBO>
         }
     }
 }
-
-LandingScreenVM --> Utilities
+NoteBOExtension --> Utilities
 
 newpage
 
