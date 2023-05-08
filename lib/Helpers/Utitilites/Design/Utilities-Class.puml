@@ -18,26 +18,4 @@ package BOs{
     }
 }
 NoteBOExtension --> Utilities
-
-newpage
-
-title **Utilities - Class Diagram**
-
-package Helpers{
-    package Utilities{
-        class Utilities{
-            + showDate() : DateTime
-        }
-    }
-}
-
-package Pages{
-    package CreatePostScreen{
-       class CreatePostScreenVM{
-            + addPost(): void
-        }
-    }
-}
-
-CreatePostScreenVM --> Utilities
 @enduml
