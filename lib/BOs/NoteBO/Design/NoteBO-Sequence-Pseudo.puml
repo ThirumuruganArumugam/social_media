@@ -30,4 +30,3 @@ hnote across
  SORT the **@tempListOfPosts** using **sort()** and inside **sort()**,pass the **date** to **compareTo()** to compare.
 end note
  @enduml
-
