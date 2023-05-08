@@ -6,7 +6,6 @@ package Pages{
     package CreatePostScreen{
         class CreatePostScreenModel{
             + NoteService : INoteService
-            + @listOfPosts : List<NoteBO>
         }
         class CreatePostScreenVM{
             + createNewPost() : Future<void>
