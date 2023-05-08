@@ -9,7 +9,7 @@ package Pages{
             + @statusCode : String
         }
         class ResponseScreenVM{
-            + navigateToLandingPage() : void
+            + navigateToLandingScreen() : void
         }
         class ResponseScreen{
             - _responseScreenVM : ResponseScreenVM

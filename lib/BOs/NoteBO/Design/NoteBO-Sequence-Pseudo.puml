@@ -1,4 +1,4 @@
-@startuml NoteBO-Sequence-Pseudo
+@startuml PostBO-Sequence-Pseudo
 
 !define POSITIVERESPONSE 90EE90
 !define NEGATIVEERESPONSE EFBBBB
@@ -14,11 +14,11 @@ skinparam sequence{
     ArrowFontColor #234E70
 }
 
-title   **NoteBOExtension - sortPostsByDate()**
+title   **PostBOExtension - sortPostsByDate()**
 autonumber 1
 hide footbox
 participant Caller as C
-participant NoteBOExtension as NE
+participant PostBOExtension as NE
 C -> NE : Invoke **sortUserDetailsInAsscendingOrderById()**
 activate C
 activate NE

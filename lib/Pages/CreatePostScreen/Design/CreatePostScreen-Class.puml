@@ -5,10 +5,12 @@ title **CreatePostScreen - Class**
 package Pages{
     package CreatePostScreen{
         class CreatePostScreenModel{
-            + NoteService : INoteService
+            + PostService : IPostService
+            + @title: String
+            + @description: String
         }
         class CreatePostScreenVM{
-            + createNewPost(title: String ,description: String) : Future<void>
+            + createNewPost() : Future<void>
             + navigateBackToLandingScreen() : void
             + navigateToResponseScreen(Status Code: statusCode) : void
             + onTitleChange(title: String) : void
@@ -23,22 +25,22 @@ package Pages{
 }
 
 package Services{
-    package NoteServices{
-        interface INoteService{
-            + createPost(Post: NoteBO): Future<ServiceResult<bool>>
+    package PostService{
+        interface IPostService{
+            + createPost(Post: PostBO): Future<ServiceResult<bool>>
         }
     }
 }
 
 package BOs{
-    package NoteBO{
-        class NoteBO{
+    package PostBO{
+        class PostBO{
         }
     }
 }
 
-CreatePostScreenVM --> NoteBO 
-CreatePostScreenVM --> INoteService 
+CreatePostScreenVM --> PostBO 
+CreatePostScreenVM --> IPostService 
 CreatePostScreenVM --> CreatePostScreenModel : extends
 CreatePostScreen --> CreatePostScreenVM : uses
 @enduml

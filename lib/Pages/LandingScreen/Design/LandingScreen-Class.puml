@@ -5,9 +5,9 @@ title **LandingScreen - Class Diagram**
 package Pages{
     package LandingScreen{
         class LandingScreenModel{
-            + NoteService : INoteService
-            + originalListOfPosts : List<NoteBO>
-            + @tempListOfPosts : List<NoteBO>
+            + PostService : IPostService
+            + originalListOfPosts : List<PostBO>
+            + @tempListOfPosts : List<PostBO>
             + @isLoading : bool
             + @isError : bool
             + @errorMessage: String
@@ -26,27 +26,27 @@ package Pages{
 }
 
 package BOs{
-    package NoteBO{
-        class NoteBO{
+    package PostBO{
+        class PostBO{
         }
-        class NoteBOExtension{
-            + sortPostsByDate() : List<NoteBO>
+        class PostBOExtension{
+            + sortPostsByDate() : List<PostBO>
         }
     }
 }
 
 package Services{
-    package NoteService{
-        interface INoteService{
-            + getPosts(): Future<ServiceResult<List<NoteBO>>>
+    package PostService{
+        interface IPostService{
+            + getPosts(): Future<ServiceResult<List<PostBO>>>
         }
     }
 }
 
 LandingScreenVM --> LandingScreenModel : Extends
 LandingScreen --> LandingScreenVM: Uses
-LandingScreenVM --> NoteBO
-NoteBOExtension --> NoteBO
-LandingScreenVM -> NoteBOExtension
-LandingScreenVM -> INoteService
+LandingScreenVM --> PostBO
+PostBOExtension --> PostBO
+LandingScreenVM -> PostBOExtension
+LandingScreenVM -> IPostService
 @enduml

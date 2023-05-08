@@ -1,4 +1,4 @@
-@startuml NoteService-Sequence-Pseudo
+@startuml PostService-Sequence-Pseudo
 
 !define POSITIVERESPONSE 90EE90
 !define NEGATIVEERESPONSE EFBBBB
@@ -14,24 +14,24 @@ skinparam sequence{
     ArrowFontColor #234E70
 }
 
-title   **NoteService - createPost()**
+title   **PostService - createPost()**
 autonumber 1
 hide footbox
-Caller -> NoteService: Invoke **createPost()**
+Caller -> PostService: Invoke **createPost()**
 activate Caller
-activate NoteService
+activate PostService
 alt #POSITIVERESPONSE (TRY)
-    NoteService -> Server : Make an http get call to the URL \n and pass the **authkey** in header
+    PostService -> Server : Make an http get call to the URL \n and pass the **authkey** in header
     activate Server
-    Server --> NoteService : Return the response
+    Server --> PostService : Return the response
     deactivate Server
-    NoteService -> NoteService : Store the respose in **response** variable
-    NoteService -> NoteService : Invoke **getAPIServiceResult** by using **response** and store the value in **result**
-    NoteService --> Caller : Return the **result**
+    PostService -> PostService : Store the respose in **response** variable
+    PostService -> PostService : Invoke **getAPIServiceResult** by using **response** and store the value in **result**
+    PostService --> Caller : Return the **result**
 else #NEGATIVEERESPONSE (CATCH)
-    NoteService -> NoteService : Invoke **exception.writeException()**
-    NoteService --> Caller: Return the ServiceResult with status code as **ServiceException** and the\nmessage with exception **message**
-    deactivate NoteService
+    PostService -> PostService : Invoke **exception.writeException()**
+    PostService --> Caller: Return the ServiceResult with status code as **ServiceException** and the\nmessage with exception **message**
+    deactivate PostService
     deactivate Caller
 end
 
@@ -70,24 +70,24 @@ skinparam sequence{
     ArrowFontColor #234E70
 }
 
-title   **NoteService - getPosts()**
+title   **PostService - getPosts()**
 autonumber 1
 hide footbox
-Caller -> NoteService: Invoke **getUserDetail()**
+Caller -> PostService: Invoke **getUserDetail()**
 activate Caller
-activate NoteService
+activate PostService
 alt #POSITIVERESPONSE (TRY)
-    NoteService -> Server : Make an http get call to the URL \n and pass the **authkey** in header
+    PostService -> Server : Make an http get call to the URL \n and pass the **authkey** in header
     activate Server
-    Server --> NoteService : Return the response
+    Server --> PostService : Return the response
     deactivate Server
-    NoteService -> NoteService : Store the respose in **response** variable
-    NoteService -> NoteService : Invoke **getAPIServiceResult** by using **response** and store the value in **result**
-    NoteService --> Caller : Return the **result**
+    PostService -> PostService : Store the respose in **response** variable
+    PostService -> PostService : Invoke **getAPIServiceResult** by using **response** and store the value in **result**
+    PostService --> Caller : Return the **result**
 else #NEGATIVEERESPONSE (CATCH)
-    NoteService -> NoteService : Invoke **exception.writeException()**
-    NoteService --> Caller: Return the ServiceResult with status code as **ServiceException** and the\nmessage with exception **message**
-    deactivate NoteService
+    PostService -> PostService : Invoke **exception.writeException()**
+    PostService --> Caller: Return the ServiceResult with status code as **ServiceException** and the\nmessage with exception **message**
+    deactivate PostService
     deactivate Caller
 end
 

@@ -5,17 +5,17 @@ title **Utilities - Class Diagram**
 package Helpers{
     package Utilities{
         class Utilities{
-            + showDate() : DateTime
+            + currentDate() : DateTime
         }
     }
 }
 
 package BOs{
-    package NoteBO{
-        class NoteBOExtension{
-            + sortPostsByDate() : List<NoteBO>
+    package PostBO{
+        class PostBOExtension{
+            + sortPostsByDate() : List<PostBO>
         }
     }
 }
-NoteBOExtension --> Utilities
+PostBOExtension --> Utilities
 @enduml

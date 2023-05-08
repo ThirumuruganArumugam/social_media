@@ -13,7 +13,7 @@ extension ExceptionalHandling on Object {
 }
 
 extension DateTimeHandling on DateTime {
-  DateTime showDate() {
+  DateTime currentDate() {
     var now = DateTime.now();
     var formatter = DateFormat('dd-MM-yyyy');
     String formattedDate = formatter.format(now);
