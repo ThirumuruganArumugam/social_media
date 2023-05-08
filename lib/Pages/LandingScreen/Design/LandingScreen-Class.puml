@@ -7,7 +7,7 @@ package Pages{
         class LandingScreenModel{
             + NoteService : INoteService
             + originalListOfPosts : List<NoteBO>
-            + @listOfPosts : List<NoteBO>
+            + @tempListOfPosts : List<NoteBO>
             + @isPostLoading : bool
             + @isError : bool
             + @errorMessage: String
