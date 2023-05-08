@@ -23,7 +23,7 @@ package Pages{
 package Services{
     package NoteServices{
         interface INoteService{
-            + createPost(): Future<ServiceResult<bool>>
+            + createPost(Post: NoteBO): Future<ServiceResult<bool>>
         }
     }
 }
