@@ -13,7 +13,8 @@ package Pages{
         }
         class ResponseScreen{
             - _responseScreenVM : ResponseScreenVM
-            + dispose() : void
+            + initState(): void
+            + dispose(): void
         }
     }
 }

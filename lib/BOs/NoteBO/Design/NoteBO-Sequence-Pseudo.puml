@@ -17,13 +17,15 @@ skinparam sequence{
 title   **NoteBOExtension - sortPostsByDate()**
 autonumber 1
 hide footbox
-Caller -> NoteBOExtension : Invoke **sortUserDetailsInAsscendingOrderById()**
-activate Caller
-activate NoteBOExtension
-NoteBOExtension -> NoteBOExtension : Sort the **@tempListOfPosts** using **sort()** and\nuse **CompareTo()** to compare **date**
-NoteBOExtension --> Caller : Returns **List<UserBO>**
-deactivate NoteBOExtension
-deactivate Caller
+participant Caller as C
+participant NoteBOExtension as NE
+C -> NE : Invoke **sortUserDetailsInAsscendingOrderById()**
+activate C
+activate NE
+NE -> NE : Sort the **@tempListOfPosts** using **sort()** and\nuse **CompareTo()** to compare **date**
+NE --> C : Returns **List<UserBO>**
+deactivate NE
+deactivate C
 
 ==Pseudocode==
 hnote across

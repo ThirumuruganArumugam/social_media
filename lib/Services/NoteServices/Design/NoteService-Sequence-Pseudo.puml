@@ -14,7 +14,63 @@ skinparam sequence{
     ArrowFontColor #234E70
 }
 
-title   **UserServiceDetail - getUserDetail()**
+title   **NoteService - createPost()**
+autonumber 1
+hide footbox
+Caller -> NoteService: Invoke **createPost()**
+activate Caller
+activate NoteService
+alt #POSITIVERESPONSE (TRY)
+    NoteService -> Server : Make an http get call to the URL \n and pass the **authkey** in header
+    activate Server
+    Server --> NoteService : Return the response
+    deactivate Server
+    NoteService -> NoteService : Store the respose in **response** variable
+    NoteService -> NoteService : Invoke **getAPIServiceResult** by using **response** and store the value in **result**
+    NoteService --> Caller : Return the **result**
+else #NEGATIVEERESPONSE (CATCH)
+    NoteService -> NoteService : Invoke **exception.writeException()**
+    NoteService --> Caller: Return the ServiceResult with status code as **ServiceException** and the\nmessage with exception **message**
+    deactivate NoteService
+    deactivate Caller
+end
+
+==Pseudocode==
+hnote across
+    **TRY** 
+      
+        EXECUTE _dio.get() with the URL as **"https://dummyjson.com/getUsers"** and with header's key **authkey** and value as **123**
+       
+        STORE the response in a variable **response**
+        
+        EXECUTE the method **getAPIServiceResult** by passing content type as  'List<UserBO>' and STORE inside the **result** variable
+       
+        RETURN the **result**
+    
+    **CATCH**
+        
+        INVOKE **exception.writeException()** method
+        
+        RETURN the response as **ServiceResult<List<UserBO>>** with status code as **SystemException** and exception **message**.
+end note
+
+newpage
+
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+title   **NoteService - getPosts()**
 autonumber 1
 hide footbox
 Caller -> NoteService: Invoke **getUserDetail()**
@@ -34,8 +90,6 @@ else #NEGATIVEERESPONSE (CATCH)
     deactivate NoteService
     deactivate Caller
 end
-
-
 
 ==Pseudocode==
 hnote across

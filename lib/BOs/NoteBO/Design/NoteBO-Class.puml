@@ -25,7 +25,7 @@ package Pages{
 
     package CreatePostScreen{
         class CreatePostScreenVM{
-            + createNewPost() : Future<void>
+            + createNewPost(title: String ,description: String) : Future<void>
         }
     }
 }

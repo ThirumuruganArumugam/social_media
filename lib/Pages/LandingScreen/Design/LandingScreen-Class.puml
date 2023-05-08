@@ -8,13 +8,13 @@ package Pages{
             + NoteService : INoteService
             + originalListOfPosts : List<NoteBO>
             + @tempListOfPosts : List<NoteBO>
-            + @isPostLoading : bool
+            + @isLoading : bool
             + @isError : bool
             + @errorMessage: String
         }
         class LandingScreenVM{
             + fetchPosts(): Future<void>
-            + sortUsers(): void
+            + sortPosts(): void
             + navigateToCreatePostScreen() : void
         }
         class LandingScreen{

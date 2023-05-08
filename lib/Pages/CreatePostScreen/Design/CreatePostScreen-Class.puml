@@ -8,7 +8,7 @@ package Pages{
             + NoteService : INoteService
         }
         class CreatePostScreenVM{
-            + createNewPost(title: String ,description: String ) : Future<void>
+            + createNewPost(title: String ,description: String) : Future<void>
             + navigateBackToLandingScreen() : void
             + navigateToResponseScreen(Status Code: statusCode) : void
             + onTitleChange(title: String) : void
