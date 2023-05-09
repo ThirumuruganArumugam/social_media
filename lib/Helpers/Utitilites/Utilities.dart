@@ -12,7 +12,6 @@ extension ExceptionalHandling on Object {
   }
 }
 
-extension DateTimeHandling on DateTime {
   DateTime currentDate() {
     var now = DateTime.now();
     var formatter = DateFormat('dd-MM-yyyy');
@@ -20,4 +19,3 @@ extension DateTimeHandling on DateTime {
     print(formattedDate);
     return DateTime.now();
   }
-}
