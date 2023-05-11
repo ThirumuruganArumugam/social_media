@@ -14,48 +14,45 @@ skinparam sequence{
     ArrowFontColor #234E70
 }
 
-title   **PostService - createPost()**
+title   **PostService - getPosts()**
 autonumber 1
 hide footbox
-Caller -> PostService: Invoke **createPost()**
+Caller -> PostService: Invoke **getPosts()**
 activate Caller
 activate PostService
 alt #POSITIVERESPONSE (TRY)
     PostService -> Server : Make an http get call to the URL \n and pass the **authkey** in header
     activate Server
-    Server --> PostService : Return the response
+    Server --> PostService : Returns the response
     deactivate Server
     PostService -> PostService : Store the respose in **response** variable
     PostService -> PostService : Invoke **getAPIServiceResult** by using **response** and store the value in **result**
-    PostService --> Caller : Return the **result**
+    PostService --> Caller : Return **result**
 else #NEGATIVEERESPONSE (CATCH)
-    PostService -> PostService : Invoke **exception.writeException()**
-    PostService --> Caller: Return the ServiceResult with status code as **ServiceException** and the\nmessage with exception **message**
+    PostService -> PostService : Write exception logs
+    PostService --> Caller: Returns
     deactivate PostService
     deactivate Caller
 end
 
-==Pseudocode==
-hnote across
-    **TRY** 
-      
-        EXECUTE _dio.get() with the URL as **"https://dummyjson.com/getUsers"** and with header's key **authkey** and value as **123**
-       
+    ==Pseudocode==
+    hnote across
+    **TRY**
+
+        EXECUTE _dio.get() with the URL as **"https://dummyjson.com/getPosts"** and with header's key **authkey** and value as **123**
+
         STORE the response in a variable **response**
-        
+
         EXECUTE the method **getAPIServiceResult** by passing content type as  'List<UserBO>' and STORE inside the **result** variable
-       
-        RETURN the **result**
-    
+
+        Return the **result**
+
     **CATCH**
-        
-        INVOKE **exception.writeException()** method
-        
-        RETURN the response as **ServiceResult<List<UserBO>>** with status code as **SystemException** and exception **message**.
-end note
 
-newpage
+        INVOKE **writeException()** on the exception object ex.
+    end note
 
+newpage **PostService - createPost()**
 !define POSITIVERESPONSE 90EE90
 !define NEGATIVEERESPONSE EFBBBB
 !define NUETRALRESPONSE F2DC79
@@ -70,45 +67,39 @@ skinparam sequence{
     ArrowFontColor #234E70
 }
 
-title   **PostService - getPosts()**
 autonumber 1
 hide footbox
-Caller -> PostService: Invoke **getUserDetail()**
+Caller -> PostService: Invoke **createPost(Post: PostBO)**
 activate Caller
 activate PostService
 alt #POSITIVERESPONSE (TRY)
-    PostService -> Server : Make an http get call to the URL \n and pass the **authkey** in header
+    PostService -> Server : Make an http post call to the URL \n and pass the **authkey** in header
     activate Server
-    Server --> PostService : Return the response
+    Server --> PostService : Returns the response
     deactivate Server
     PostService -> PostService : Store the respose in **response** variable
-    PostService -> PostService : Invoke **getAPIServiceResult** by using **response** and store the value in **result**
-    PostService --> Caller : Return the **result**
-else #NEGATIVEERESPONSE (CATCH)
-    PostService -> PostService : Invoke **exception.writeException()**
-    PostService --> Caller: Return the ServiceResult with status code as **ServiceException** and the\nmessage with exception **message**
+    PostService -> PostService : Invoke **getAPIServiceResult** by using **response**\nand store the value in **result**
+    PostService --> Caller : Returns **result**
+else #NEGATIVEERESPONSE CATCH
+    PostService -> PostService : write Exception logs
+    PostService --> Caller: Returns
     deactivate PostService
     deactivate Caller
 end
 
 ==Pseudocode==
 hnote across
-    **TRY** 
-      
-        EXECUTE _dio.get() with the URL as **"https://dummyjson.com/getUsers"** and with header's key **authkey** and value as **123**
-       
-        STORE the response in a variable **response**
-        
-        EXECUTE the method **getAPIServiceResult** by passing content type as  'List<UserBO>' and STORE inside the **result** variable
-       
-        RETURN the **result**
-    
-    **CATCH**
-        
-        INVOKE **exception.writeException()** method
-        
-        RETURN the response as **ServiceResult<List<UserBO>>** with status code as **SystemException** and exception **message**.
-end note
- 
- @enduml
+**TRY**
+    EXECUTE _dio.post() with the URL as **"https://dummyjson.com/createPost"** and with header's key **authkey** and value as **456**
 
+    STORE the response in a variable **response**
+
+    EXECUTE the method **getAPIServiceResult** by passing content type as  'List<UserBO>' and STORE inside the **result** variable
+
+    Returns the **result**
+
+**CATCH** 
+   
+    INVOKE **writeException()** on the exception object ex.
+end note
+@enduml

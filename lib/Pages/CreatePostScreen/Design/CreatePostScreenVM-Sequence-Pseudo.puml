@@ -1,0 +1,222 @@
+@startuml CreatePostScreenVM-Sequence-Pseudo
+
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+title   **CreatePostScreenVM - createNewPost()**
+autonumber 1
+hide footbox
+Caller -> CreatePostScreenVM: Invoke **createNewPost()**
+activate Caller
+activate CreatePostScreenVM
+alt #POSITIVERESPONSE (TRY)
+    CreatePostScreenVM -> CreatePostScreenVM: Set **@isLoading** is true
+    CreatePostScreenVM -> Services: Invoke **createPost(Post: PostBO)**
+    activate Services
+    Services --> CreatePostScreenVM : Returns  **ServiceResult<bool>**
+    deactivate Services
+    alt #POSITIVERESPONSE (if status code in ServiceResult is OK)
+        CreatePostScreenVM -> CreatePostScreenVM : Assign **List<PostBO>** to **originalListOfPosts** and **@tempListOfPosts**
+        CreatePostScreenVM -> CreatePostScreenVM : Assign the **statusCode** as the **data** to the **navigationStream**.  
+        CreatePostScreenVM --> Caller : Returns
+    else #NEGATIVEERESPONSE (if status code in ServiceResult is Bad Request)
+        CreatePostScreenVM -> CreatePostScreenVM : Assign the **statusCode** as the **data** to the **navigationStream**.
+        CreatePostScreenVM --> Caller : Returns
+    end
+else #NEGATIVEERESPONSE (CATCH)
+    CreatePostScreenVM -> CreatePostScreenVM : Write exception logs
+    CreatePostScreenVM --> Caller: Returns
+    deactivate CreatePostScreenVM
+    deactivate Caller
+end
+
+==Pseudocode==
+hnote across
+**TRY**
+
+    SET **@isLoading** is true
+
+    INVOKE **createPost(Post: PostBO)** method
+
+    Returns the  **ServiceResult<bool>**
+
+**IF the the status code in serviceResult is OK**
+
+    ASSIGN the **message** as the **data** to the **navigationStream**.
+
+    ASSIGN the **List<PostBO>** to the variable **originalListOfPosts** and **@tempListOfPosts**
+
+**IF status code in ServiceResult is Netwrok Failure**
+
+    ASSIGN the **message** as the **data** to the **navigationStream**.
+
+**CATCH**
+
+    INVOKE **writeException()** on the exception object ex.
+
+end note
+
+
+newpage **CreatePostScreenVM - navigateToResponseScreen(Status Code: statusCode)**
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+autonumber 1
+hide footbox
+Caller -> CreatePostScreenVM: Invokes **navigateToResponseScreen()**
+activate Caller
+activate CreatePostScreenVM
+CreatePostScreenVM -> CreatePostScreenVM : add the **NavigatorPush()** method to the navigation stream\nand assign **statusCode** to the **data** parameter 
+CreatePostScreenVM -> Caller: Display **Response** Screen
+deactivate Caller
+deactivate CreatePostScreenVM
+==Pseudocode==
+hnote across
+**TRY**
+    INVOKE **navigateToCreatePostScreen()** method
+
+    ADD the **NavigatorPush()** method which has pageconfig of **ResponseScreen** and data as **status code** to the navgation stream
+
+    DISPLAY the **ResponseScreen**
+end note
+
+newpage **CreatePostScreenVM - navigateToLandingScreen()**
+
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+autonumber 1
+hide footbox
+Caller -> CreatePostScreenVM: Invokes **navigateToLandingScreen()**
+activate Caller
+activate CreatePostScreenVM
+CreatePostScreenVM -> CreatePostScreenVM : add the **NavigatorPop()** method to the navigation stream
+CreatePostScreenVM -> Caller: Display **Landing** Screen
+deactivate Caller
+deactivate CreatePostScreenVM
+==Pseudocode==
+hnote across
+**TRY**
+    INVOKE **navigateToLandingScreen()** method
+
+    ADD the **NavigatorPop()** method
+
+    DISPLAY the **LandingScreen**
+end note
+
+newpage **CreatePostScreenVM - onTitleChange(title: String)**
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+autonumber 1
+hide footbox
+Caller -> CreatePostScreenVM: Invokes **onTitleChange(String: title)**
+activate Caller
+activate CreatePostScreenVM
+alt #POSITIVERESPONSE **IF title is not empty**
+    CreatePostScreenVM -> CreatePostScreenVM: add the textfield data to the text field controller.
+else #POSITIVERESPONSE **IF title is empty**
+    CreatePostScreenVM -> CreatePostScreenVM: add the textfield data to the text field controller.
+end
+CreatePostScreenVM --> Caller: Returnss
+deactivate CreatePostScreenVM
+deactivate Caller
+==Pseudocode==
+hnote across
+**TRY**
+    INVOKE **onTitleChange(description: String)** method
+
+    **IF title is not empty**
+
+        Add the textfield data to the text field contorller
+
+    **IF title is empty**
+
+        Add the textfield data to the text field contorller
+end note
+
+
+newpage **CreatePostScreenVM - onDescriptionChange(description: String)**
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+autonumber 1
+hide footbox
+Caller -> CreatePostScreenVM: Invokes **onDescriptionChange(description: String)**
+activate Caller
+activate CreatePostScreenVM
+alt #POSITIVERESPONSE **IF description is not empty**
+    CreatePostScreenVM -> CreatePostScreenVM: add the textfield data to the text field controller.
+else #POSITIVERESPONSE **IF description is empty**
+    CreatePostScreenVM -> CreatePostScreenVM: add the textfield data to the text field controller.
+end
+CreatePostScreenVM --> Caller: Returnss
+deactivate CreatePostScreenVM
+deactivate Caller
+==Pseudocode==
+hnote across
+**TRY**
+    INVOKE **onDescriptionChange(description: String)** method
+
+    **IF description is not empty**
+
+        Add the textfield data to the text field contorller
+
+    **IF description is empty**
+
+        Add the textfield data to the text field contorller
+end note
+@enduml

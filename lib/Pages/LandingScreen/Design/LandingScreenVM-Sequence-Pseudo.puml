@@ -1,0 +1,155 @@
+@startuml LandingScreenVM-Sequence-Pseudo
+
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+title   **LandingScreenVM - fetchPosts()**
+autonumber 1
+hide footbox
+Caller -> LandingScreenVM: Invoke **fetchPosts()**
+activate Caller
+activate LandingScreenVM
+alt #POSITIVERESPONSE (TRY)
+    LandingScreenVM -> LandingScreenVM: Set **@isLoading** is true
+    LandingScreenVM -> Services: Invoke **getPosts()**
+    activate Services
+    Services --> LandingScreenVM : Returns  **ServiceResult<List<PostBO>>**
+    deactivate Services
+    alt #POSITIVERESPONSE (if status code in ServiceResult is OK)
+        LandingScreenVM -> LandingScreenVM : Set **@isError** to false
+        LandingScreenVM -> LandingScreenVM : Assign **List<PostBO>** to **@originalListOfPosts** and **@tempListOfPosts**
+        LandingScreenVM --> Caller : Returns
+    else #NEGATIVEERESPONSE (if status code in ServiceResult is Bad Request)
+        LandingScreenVM -> LandingScreenVM : Set serviceResult message in **@errorMessage**
+        LandingScreenVM -> LandingScreenVM : Set **@isError** to true
+        LandingScreenVM --> Caller : Returns
+    end
+LandingScreenVM -> LandingScreenVM: Set **@isLoading** is false
+LandingScreenVM --> Caller: Returns
+else #NEGATIVEERESPONSE (CATCH)
+    LandingScreenVM -> LandingScreenVM : write Exception Logs
+    LandingScreenVM --> Caller: Returns
+    deactivate LandingScreenVM
+    deactivate Caller
+end
+
+==Pseudocode==
+hnote across
+**TRY** 
+
+    Set the **@isLoading** is true
+    
+    INVOKE **getPosts()** method
+    
+    Returns the  **ServiceResult<List<PostBO>>**
+
+    **IF the the status code in serviceResult is OK**
+    
+        SET the **@isError** is false
+    
+        ASSIGN the **List<PostBO>** to the variable **@originalListOfPosts** and **@tempListOfPosts**
+    
+    **IF status code in ServiceResult is Bad Request**
+        
+        SET the serviceResult message in **@errorMessage**
+    
+        SET the **@isError** is true
+    
+**CATCH**
+    
+    INVOKE **writeException()** on the exception object ex.
+end note
+
+newpage **LandingScreenVM - sortPosts()**
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+autonumber 1
+hide footbox
+Caller -> LandingScreenVM: Invoke **sortPosts()**
+activate Caller
+activate LandingScreenVM
+alt #POSITIVERESPONSE (TRY)
+    LandingScreenVM -> PostBOExtention: Invoke **sortPostsByDate()**
+    activate PostBOExtention
+    PostBOExtention --> LandingScreenVM : Returns **List<PostBO>**
+    deactivate PostBOExtention
+    LandingScreenVM -> LandingScreenVM: Set it to **@tempListOfPosts**
+    LandingScreenVM --> Caller: Returns 
+
+else #NEGATIVEERESPONSE (CATCH)
+    LandingScreenVM -> LandingScreenVM : writeException logs
+    LandingScreenVM --> Caller: Returns
+    deactivate LandingScreenVM
+    deactivate Caller
+end
+
+==Pseudocode==
+hnote across
+**TRY**
+    INVOKE **@tempListOfPosts.sortPostsByDate()** method
+
+    Returns the **List<PostBO>**
+
+    SET the **List<PostBO>** to the setMethod **@tempListOfPosts**
+
+**CATCH**
+
+    INVOKE **writeException()** on the exception object ex.
+end note
+
+newpage **LandingScreenVM - navigateToCreatePostScreen()**
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+autonumber
+hide footbox
+Caller -> LandingScreenVM: Invokes **navigateToCreatePostScreen()**
+activate Caller
+activate LandingScreenVM
+LandingScreenVM -> LandingScreenVM : add the **NavigatorPush()** method to the navigation stream
+LandingScreenVM -> Caller: Display **Create Post** Screen
+deactivate Caller
+deactivate LandingScreenVM
+==Pseudocode==
+hnote across
+**TRY**
+    INVOKE **navigateToCreatePostScreen()** method
+
+    ADD the **NavigatorPush()** method which has pageconfig of **CreatePost screen** and data to the navgation stream
+
+    DISPLAY the **CreatePost Screen**
+end note
+@enduml

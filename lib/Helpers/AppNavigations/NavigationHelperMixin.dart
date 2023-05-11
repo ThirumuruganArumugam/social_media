@@ -10,7 +10,7 @@
 //   @override
 //   int get currentIndex {
 //     _$currentIndexAtom.reportRead();
-//     return super.currentIndex;
+//     Returns super.currentIndex;
 //   }
 
 //   @override
@@ -22,7 +22,7 @@
 
 //   @override
 //   String toString() {
-//     return '''
+//     Returns '''
 // currentIndex: ${currentIndex}
 //     ''';
 //   }

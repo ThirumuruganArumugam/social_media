@@ -22,7 +22,7 @@ IPostService --> PostBO
 
 newpage
 
-title **PostBO-Class Diagram**
+title **PostService-Class Diagram**
 
 package Pages{
     package CreatePostScreen{
@@ -43,7 +43,7 @@ package Services{
 CreatePostScreenVM --> IPostService
 
 newpage
-title **PostBO-Class Diagram**
+title **PostService-Class Diagram**
 
 package Pages{
     package LandingScreen{

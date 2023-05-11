@@ -1,0 +1,106 @@
+@startuml LandingScreen-Sequence-Pseudo
+
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+title   **LandingScreen - initState()**
+autonumber 1
+hide footbox
+User -> LandingScreen: Invoke **initState()**
+activate User
+activate LandingScreen
+alt #POSITIVERESPONSE (TRY)
+    LandingScreen -> LandingScreenVM : Invoke **fetchPosts()**
+    activate LandingScreenVM
+    LandingScreenVM --> LandingScreen : Returns
+    deactivate LandingScreenVM
+    alt #NUETRALRESPONSE IF **@isLoading is true**
+        LandingScreen --> User : Display **Loading** view
+    else #NEGATIVEERESPONSE IF **@isError is true**
+        LandingScreen --> User : Display **@errorMessage** and **@statusCode**
+    end
+    LandingScreen --> User : Display List of Posts from **@tempListOfPosts**
+
+    LandingScreen -> LandingScreen: Add a listener to the navigationStream and listen to the events
+
+alt #POSITIVERESPONSE event is NavigatorPush
+    LandingScreen-> LandingScreen: Push the context to the **Create Post Screen**.
+    LandingScreen --> User: Returnss
+    end
+
+else #NEGATIVEERESPONSE (CATCH)
+    LandingScreen -> LandingScreen : Write exception logs
+    LandingScreen --> User: Returns
+    deactivate LandingScreen
+    deactivate User
+end
+
+==Pseudocode==
+hnote across
+**TRY**
+    
+    INVOKE **fetchPosts()** using the **LandingScreenVM** instance
+    
+    **IF @isLoading is true**
+
+        DISPLAY the loading view
+
+    **IF @isError is true**
+    
+        DISPLAY the **@errorMessage** and **@statusCode**
+    
+    DISPLAY the List of Posts from **@tempListOfPosts**
+
+    Add a listener to the **navigationStream** and listen to the **events**
+    
+    **EVENT is NavigatorPush**
+
+        Push the context to the **CreatePost** Screen
+
+**CATCH**
+    
+    INVOKE **writeException()** on the exception object ex.
+
+end note
+
+newpage  **LandingScreen - dispose()**
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+autonumber 1
+hide footbox
+User -> LandingScreen: Invokes **dispose()** method
+activate User
+activate LandingScreen
+LandingScreen -> LandingScreen: Disposes the **navigationStream Controller**
+LandingScreen --> User: Returnss
+deactivate LandingScreen
+deactivate User
+
+==Pseudocode==
+hnote across    
+    USING **.dispose()** method dispose the **navigationStream Controller**
+end note
+@enduml

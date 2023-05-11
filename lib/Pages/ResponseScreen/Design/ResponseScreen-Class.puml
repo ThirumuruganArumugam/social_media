@@ -5,10 +5,12 @@ title ResponseScreen - Class Diagram
 package Pages{
     package ResponseScreen{
         class ResponseScreenModel{
-            + @message: String
-            + @statusCode : String
+            + @successMessage: String
+            + @failureMessage: String
+            + @isVisible: bool
         }
         class ResponseScreenVM{
+            + Constructor(String: Status Code) : void
             + navigateToLandingScreen() : void
         }
         class ResponseScreen{
@@ -19,6 +21,6 @@ package Pages{
     }
 }
 
-ResponseScreen --> ResponseScreenVM : Uses
-ResponseScreenVM --> ResponseScreenModel : Extends
+ResponseScreen --> ResponseScreenVM: uses
+ResponseScreenVM --> ResponseScreenModel : extends
 @enduml

@@ -18,16 +18,16 @@ activate NetworkCheck
 alt
     NetworkCheck -> NetworkCheck: invokes InternetConnectionChecker().hasConnection\n and store the result.
     alt#6883BC #FCF6F5 result == true
-        NetworkCheck --> Caller: Returns true
+        NetworkCheck --> Caller: Returnss true
     else #efbbbb result ==false
-        NetworkCheck --> Caller : Returns false
+        NetworkCheck --> Caller : Returnss false
     end
 else
     NetworkCheck -> ExceptionHandling: invokes writeExceptionData()
     activate ExceptionHandling
-    ExceptionHandling --> NetworkCheck: Returns
+    ExceptionHandling --> NetworkCheck: Returnss
     deactivate ExceptionHandling
-    NetworkCheck --> Caller: Returns false
+    NetworkCheck --> Caller: Returnss false
     deactivate NetworkCheck
     deactivate Caller
 end

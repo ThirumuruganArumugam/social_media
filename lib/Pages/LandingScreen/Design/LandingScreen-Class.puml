@@ -6,11 +6,12 @@ package Pages{
     package LandingScreen{
         class LandingScreenModel{
             + PostService : IPostService
-            + originalListOfPosts : List<PostBO>
+            + @originalListOfPosts : List<PostBO>
             + @tempListOfPosts : List<PostBO>
             + @isLoading : bool
             + @isError : bool
             + @errorMessage: String
+            + @statusCode: String
         }
         class LandingScreenVM{
             + fetchPosts(): Future<void>
@@ -43,8 +44,8 @@ package Services{
     }
 }
 
-LandingScreenVM --> LandingScreenModel : Extends
-LandingScreen --> LandingScreenVM: Uses
+LandingScreenVM --> LandingScreenModel : extends
+LandingScreen --> LandingScreenVM : uses
 LandingScreenVM --> PostBO
 PostBOExtension --> PostBO
 LandingScreenVM -> PostBOExtension

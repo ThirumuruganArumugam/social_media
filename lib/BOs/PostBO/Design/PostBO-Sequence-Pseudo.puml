@@ -17,18 +17,19 @@ skinparam sequence{
 title   **PostBOExtension - sortPostsByDate()**
 autonumber 1
 hide footbox
-participant Caller as C
-participant PostBOExtension as NE
-C -> NE : Invoke **sortUserDetailsInAsscendingOrderById()**
-activate C
-activate NE
-NE -> NE : Sort the **@tempListOfPosts** using **sort()** and\nuse **CompareTo()** to compare **currentDate**
-NE --> C : Returns **List<UserBO>**
-deactivate NE
-deactivate C
+Caller -> PostBOExtension : Invoke **sortPostsByDate()**
+activate Caller
+activate PostBOExtension
+PostBOExtension -> Utilities : Sort the **@tempListOfPosts** using **sort()** and\nuse **CompareTo()** to compare **date**
+activate Utilities
+Utilities -> PostBOExtension : Returns
+deactivate Utilities
+PostBOExtension --> Caller : Returnss **List<PostBO>**
+deactivate PostBOExtension
+deactivate Caller
 
 ==Pseudocode==
 hnote across
- SORT the **@tempListOfPosts** using **sort()** and inside **sort()**,pass the **currentDate** to **compareTo()** to compare.
+ SORT the **@tempListOfPosts** using **sort()** and inside **sort()**,pass the **date** to **compareTo()** to compare.
 end note
  @enduml

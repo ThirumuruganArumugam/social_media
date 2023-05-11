@@ -8,6 +8,7 @@ package Pages{
             + PostService : IPostService
             + @title: String
             + @description: String
+            + @isLoading : bool
         }
         class CreatePostScreenVM{
             + createNewPost() : Future<void>
@@ -39,8 +40,8 @@ package BOs{
     }
 }
 
-CreatePostScreenVM --> PostBO 
-CreatePostScreenVM --> IPostService 
+CreatePostScreenVM --> PostBO
+CreatePostScreenVM --> IPostService
 CreatePostScreenVM --> CreatePostScreenModel : extends
 CreatePostScreen --> CreatePostScreenVM : uses
 @enduml

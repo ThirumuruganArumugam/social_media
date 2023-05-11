@@ -89,7 +89,7 @@
 //   bool useLegacyColorScheme = true;
 
 //   BottomNavigationBar generateBottomNavigationConfig() {
-//     return BottomNavigationBar(
+//     Returns BottomNavigationBar(
 //       items: subTabUIConfigs,
 //       currentIndex: currentIndex,
 //       selectedItemColor: selectedItemColor,
@@ -160,7 +160,7 @@
 
 // MaterialPageRoute builder<T>(CustomRouteSettings<T> sharedData) {
 //   sharedData.pageConfig.data = sharedData.data;
-//   return MaterialPageRoute(
+//   Returns MaterialPageRoute(
 //       builder: sharedData.pageConfig.build,
 //       settings: RouteSettings(name: resolveRoute(sharedData.pageConfig.route)));
 // }
@@ -266,14 +266,14 @@
 //     debugPrint("Setings name :\${settings.name}");
 //     try {
 //       var customSettings = settings.arguments as CustomRouteSettings;
-//       return builder(
+//       Returns builder(
 //         CustomRouteSettings(
 //           pageConfig: customSettings.pageConfig,
 //           data: customSettings.data,
 //         ),
 //       );
 //     } on TypeError {
-//       return builder(
+//       Returns builder(
 //         CustomRouteSettings(
 //           pageConfig: initialPage,
 //           data: initialPageData,
@@ -281,7 +281,7 @@
 //       );
 //     } catch (error) {
 //       error.writeExceptionData();
-//       return builder(
+//       Returns builder(
 //         CustomRouteSettings(
 //           pageConfig: Pages.homeScreenConfig,
 //           data: "",

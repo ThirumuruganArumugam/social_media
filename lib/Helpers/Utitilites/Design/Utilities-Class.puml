@@ -5,7 +5,7 @@ title **Utilities - Class Diagram**
 package Helpers{
     package Utilities{
         class Utilities{
-            + currentDate() : DateTime
+            + showCurrentDate() : DateTime
         }
     }
 }

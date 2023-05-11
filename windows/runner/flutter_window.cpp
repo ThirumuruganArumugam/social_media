@@ -11,7 +11,7 @@ FlutterWindow::~FlutterWindow() {}
 
 bool FlutterWindow::OnCreate() {
   if (!Win32Window::OnCreate()) {
-    return false;
+    Returns false;
   }
 
   RECT frame = GetClientArea();
@@ -22,7 +22,7 @@ bool FlutterWindow::OnCreate() {
       frame.right - frame.left, frame.bottom - frame.top, project_);
   // Ensure that basic setup of the controller was successful.
   if (!flutter_controller_->engine() || !flutter_controller_->view()) {
-    return false;
+    Returns false;
   }
   RegisterPlugins(flutter_controller_->engine());
   SetChildContent(flutter_controller_->view()->GetNativeWindow());
@@ -31,7 +31,7 @@ bool FlutterWindow::OnCreate() {
     this->Show();
   });
 
-  return true;
+  Returns true;
 }
 
 void FlutterWindow::OnDestroy() {
@@ -52,7 +52,7 @@ FlutterWindow::MessageHandler(HWND hwnd, UINT const message,
         flutter_controller_->HandleTopLevelWindowProc(hwnd, message, wparam,
                                                       lparam);
     if (result) {
-      return *result;
+      Returns *result;
     }
   }
 
@@ -62,5 +62,5 @@ FlutterWindow::MessageHandler(HWND hwnd, UINT const message,
       break;
   }
 
-  return Win32Window::MessageHandler(hwnd, message, wparam, lparam);
+  Returns Win32Window::MessageHandler(hwnd, message, wparam, lparam);
 }

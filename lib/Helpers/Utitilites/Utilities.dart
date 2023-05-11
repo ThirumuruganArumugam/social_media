@@ -12,10 +12,10 @@ extension ExceptionalHandling on Object {
   }
 }
 
-  DateTime currentDate() {
-    var now = DateTime.now();
-    var formatter = DateFormat('dd-MM-yyyy');
-    String formattedDate = formatter.format(now);
-    print(formattedDate);
-    return DateTime.now();
-  }
+  // DateTime currentDate() {
+  //   var now = DateTime.now();
+  //   var formatter = DateFormat('dd-MM-yyyy');
+  //   String formattedDate = formatter.format(now);
+  //   print(formattedDate);
+  //   Returns now;
+  // }

@@ -34,7 +34,7 @@ using EnableNonClientDpiScaling = BOOL __stdcall(HWND hwnd);
 // Scale helper to convert logical scaler values to physical using passed in
 // scale factor
 int Scale(int source, double scale_factor) {
-  return static_cast<int>(source * scale_factor);
+  Returns static_cast<int>(source * scale_factor);
 }
 
 // Dynamically loads the |EnableNonClientDpiScaling| from the User32 module.
@@ -42,7 +42,7 @@ int Scale(int source, double scale_factor) {
 void EnableFullDpiSupportIfAvailable(HWND hwnd) {
   HMODULE user32_module = LoadLibraryA("User32.dll");
   if (!user32_module) {
-    return;
+    Returns;
   }
   auto enable_non_client_dpi_scaling =
       reinterpret_cast<EnableNonClientDpiScaling*>(
@@ -60,15 +60,15 @@ class WindowClassRegistrar {
  public:
   ~WindowClassRegistrar() = default;
 
-  // Returns the singleton registar instance.
+  // Returnss the singleton registar instance.
   static WindowClassRegistrar* GetInstance() {
     if (!instance_) {
       instance_ = new WindowClassRegistrar();
     }
-    return instance_;
+    Returns instance_;
   }
 
-  // Returns the name of the window class, registering the class if it hasn't
+  // Returnss the name of the window class, registering the class if it hasn't
   // previously been registered.
   const wchar_t* GetWindowClass();
 
@@ -103,7 +103,7 @@ const wchar_t* WindowClassRegistrar::GetWindowClass() {
     RegisterClass(&window_class);
     class_registered_ = true;
   }
-  return kWindowClassName;
+  Returns kWindowClassName;
 }
 
 void WindowClassRegistrar::UnregisterWindowClass() {
@@ -141,16 +141,16 @@ bool Win32Window::Create(const std::wstring& title,
       nullptr, nullptr, GetModuleHandle(nullptr), this);
 
   if (!window) {
-    return false;
+    Returns false;
   }
 
   UpdateTheme(window);
 
-  return OnCreate();
+  Returns OnCreate();
 }
 
 bool Win32Window::Show() {
-  return ShowWindow(window_handle_, SW_SHOWNORMAL);
+  Returns ShowWindow(window_handle_, SW_SHOWNORMAL);
 }
 
 // static
@@ -167,10 +167,10 @@ LRESULT CALLBACK Win32Window::WndProc(HWND const window,
     EnableFullDpiSupportIfAvailable(window);
     that->window_handle_ = window;
   } else if (Win32Window* that = GetThisFromHandle(window)) {
-    return that->MessageHandler(window, message, wparam, lparam);
+    Returns that->MessageHandler(window, message, wparam, lparam);
   }
 
-  return DefWindowProc(window, message, wparam, lparam);
+  Returns DefWindowProc(window, message, wparam, lparam);
 }
 
 LRESULT
@@ -185,7 +185,7 @@ Win32Window::MessageHandler(HWND hwnd,
       if (quit_on_close_) {
         PostQuitMessage(0);
       }
-      return 0;
+      Returns 0;
 
     case WM_DPICHANGED: {
       auto newRectSize = reinterpret_cast<RECT*>(lparam);
@@ -195,7 +195,7 @@ Win32Window::MessageHandler(HWND hwnd,
       SetWindowPos(hwnd, nullptr, newRectSize->left, newRectSize->top, newWidth,
                    newHeight, SWP_NOZORDER | SWP_NOACTIVATE);
 
-      return 0;
+      Returns 0;
     }
     case WM_SIZE: {
       RECT rect = GetClientArea();
@@ -204,21 +204,21 @@ Win32Window::MessageHandler(HWND hwnd,
         MoveWindow(child_content_, rect.left, rect.top, rect.right - rect.left,
                    rect.bottom - rect.top, TRUE);
       }
-      return 0;
+      Returns 0;
     }
 
     case WM_ACTIVATE:
       if (child_content_ != nullptr) {
         SetFocus(child_content_);
       }
-      return 0;
+      Returns 0;
 
     case WM_DWMCOLORIZATIONCOLORCHANGED:
       UpdateTheme(hwnd);
-      return 0;
+      Returns 0;
   }
 
-  return DefWindowProc(window_handle_, message, wparam, lparam);
+  Returns DefWindowProc(window_handle_, message, wparam, lparam);
 }
 
 void Win32Window::Destroy() {
@@ -234,7 +234,7 @@ void Win32Window::Destroy() {
 }
 
 Win32Window* Win32Window::GetThisFromHandle(HWND const window) noexcept {
-  return reinterpret_cast<Win32Window*>(
+  Returns reinterpret_cast<Win32Window*>(
       GetWindowLongPtr(window, GWLP_USERDATA));
 }
 
@@ -252,11 +252,11 @@ void Win32Window::SetChildContent(HWND content) {
 RECT Win32Window::GetClientArea() {
   RECT frame;
   GetClientRect(window_handle_, &frame);
-  return frame;
+  Returns frame;
 }
 
 HWND Win32Window::GetHandle() {
-  return window_handle_;
+  Returns window_handle_;
 }
 
 void Win32Window::SetQuitOnClose(bool quit_on_close) {
@@ -265,7 +265,7 @@ void Win32Window::SetQuitOnClose(bool quit_on_close) {
 
 bool Win32Window::OnCreate() {
   // No-op; provided for subclasses.
-  return true;
+  Returns true;
 }
 
 void Win32Window::OnDestroy() {

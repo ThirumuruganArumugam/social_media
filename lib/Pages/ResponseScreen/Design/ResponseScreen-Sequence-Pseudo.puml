@@ -1,0 +1,101 @@
+@startuml ResponseScreen-Sequence-Pseudo
+
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+title   **ResponseScreen - initState()**
+autonumber 1
+hide footbox
+User -> ResponseScreen: Invoke **initState()**
+activate User
+activate ResponseScreen
+alt (TRY)
+    ResponseScreen -> ResponseScreenVM : Invoke the **Contructor()** and pass\nthe parameter as statusCode.
+    activate ResponseScreenVM
+    ResponseScreenVM --> ResponseScreen : Returns
+    deactivate ResponseScreenVM
+    alt #POSITIVERESPONSE (IF statusCode is 200)
+        ResponseScreen --> User : Display **@successMessage**
+    else #NEGATIVEERESPONSE (ELSE)
+        ResponseScreen --> User : Display **@failureMessage** and **@statusCode**.
+    end
+
+    ResponseScreen -> ResponseScreen: Add a listener to the navigationStream and listen to the events
+
+    alt #POSITIVERESPONSE event is NavigatorPopAndRemoveUntil
+        ResponseScreen-> ResponseScreen: Pop the context to the **Landing Screen**.
+        ResponseScreen --> User: Returnss
+    end
+
+else #NEGATIVEERESPONSE (CATCH)
+    ResponseScreen -> ResponseScreen : write Exception logs
+    ResponseScreen --> User: Returns
+    deactivate ResponseScreen
+    deactivate User
+end
+==Pseudocode==
+hnote across
+**TRY**
+    
+    INVOKE **Constructor()** using the **ResponseScreenVM** instance and pass the **statusCode** as parameter
+    
+    **IF statusCode is 200**
+    
+    DISPLAY the **@successMessage** 
+    
+    **ELSE**
+    
+    DISPLAY the **@failureMessage** and **@statusCode**
+
+    Add a listener to the **navigationStream** and listen to the **events**
+    
+    **EVENT is NavigatorPopAndRemoveUntil**
+
+        Pop the context to the **Landing** Screen
+    
+**CATCH**
+    
+    INVOKE **writeException()** on the exception object ex.
+
+end note
+
+newpage  **ResponseScreen - dispose()**
+!define POSITIVERESPONSE 90EE90
+!define NEGATIVEERESPONSE EFBBBB
+!define NUETRALRESPONSE F2DC79
+
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+autonumber 1
+hide footbox
+User -> ResponseScreen: Invokes **dispose()** method
+activate User
+activate ResponseScreen
+ResponseScreen -> ResponseScreen: dispose the **navigationStream Controller**
+ResponseScreen --> User: Returnss
+deactivate ResponseScreen
+deactivate User
+
+==Pseudocode==
+hnote across
+    USING **.dispose()** method dispose the **navigationStream Controller**
+end note

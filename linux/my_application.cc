@@ -72,13 +72,13 @@ static gboolean my_application_local_command_line(GApplication* application, gch
   if (!g_application_register(application, nullptr, &error)) {
      g_warning("Failed to register: %s", error->message);
      *exit_status = 1;
-     return TRUE;
+     Returns TRUE;
   }
 
   g_application_activate(application);
   *exit_status = 0;
 
-  return TRUE;
+  Returns TRUE;
 }
 
 // Implements GObject::dispose.
@@ -97,7 +97,7 @@ static void my_application_class_init(MyApplicationClass* klass) {
 static void my_application_init(MyApplication* self) {}
 
 MyApplication* my_application_new() {
-  return MY_APPLICATION(g_object_new(my_application_get_type(),
+  Returns MY_APPLICATION(g_object_new(my_application_get_type(),
                                      "application-id", APPLICATION_ID,
                                      "flags", G_APPLICATION_NON_UNIQUE,
                                      nullptr));

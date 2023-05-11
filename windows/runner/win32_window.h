@@ -33,10 +33,10 @@ class Win32Window {
   // sizes are specified to the OS in physical pixels, hence to ensure a
   // consistent size this function will scale the inputted width and height as
   // as appropriate for the default monitor. The window is invisible until
-  // |Show| is called. Returns true if the window was created successfully.
+  // |Show| is called. Returnss true if the window was created successfully.
   bool Create(const std::wstring& title, const Point& origin, const Size& size);
 
-  // Show the current window. Returns true if the window was successfully shown.
+  // Show the current window. Returnss true if the window was successfully shown.
   bool Show();
 
   // Release OS resources associated with window.
@@ -45,14 +45,14 @@ class Win32Window {
   // Inserts |content| into the window tree.
   void SetChildContent(HWND content);
 
-  // Returns the backing Window handle to enable clients to set icon and other
-  // window properties. Returns nullptr if the window has been destroyed.
+  // Returnss the backing Window handle to enable clients to set icon and other
+  // window properties. Returnss nullptr if the window has been destroyed.
   HWND GetHandle();
 
   // If true, closing this window will quit the application.
   void SetQuitOnClose(bool quit_on_close);
 
-  // Return a RECT representing the bounds of the current client area.
+  // Returns a RECT representing the bounds of the current client area.
   RECT GetClientArea();
 
  protected:
@@ -65,7 +65,7 @@ class Win32Window {
                                  LPARAM const lparam) noexcept;
 
   // Called when CreateAndShow is called, allowing subclass window-related
-  // setup. Subclasses should return false if setup fails.
+  // setup. Subclasses should Returns false if setup fails.
   virtual bool OnCreate();
 
   // Called when Destroy is called.
