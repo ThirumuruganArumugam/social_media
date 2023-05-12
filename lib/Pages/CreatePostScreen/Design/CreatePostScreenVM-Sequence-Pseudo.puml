@@ -35,7 +35,7 @@ alt (TRY)
         CreatePostScreenVM --> Caller : Returns
     end
 else #NEGATIVEERESPONSE (CATCH)
-    CreatePostScreenVM -> CreatePostScreenVM : Write exception logs
+    CreatePostScreenVM -> CreatePostScreenVM : write log Exceptions
     CreatePostScreenVM --> Caller: Returns
     deactivate CreatePostScreenVM
     deactivate Caller
@@ -94,7 +94,7 @@ alt #POSITIVERESPONSE (TRY)
 CreatePostScreenVM -> CreatePostScreenVM : Navigate to Response Screen
 CreatePostScreenVM -> Caller: Returns
 else #NEGATIVEERESPONSE (CATCH)
-    CreatePostScreenVM -> CreatePostScreenVM : Write exception logs
+    CreatePostScreenVM -> CreatePostScreenVM : write log Exceptions
     CreatePostScreenVM --> Caller: Returns
     deactivate CreatePostScreenVM
     deactivate Caller
@@ -137,7 +137,7 @@ alt #POSITIVERESPONSE (TRY)
 CreatePostScreenVM -> CreatePostScreenVM : Navigate back to landing Screen
 CreatePostScreenVM -> Caller: Returns
 else #NEGATIVEERESPONSE (CATCH)
-    CreatePostScreenVM -> CreatePostScreenVM : Write exception logs
+    CreatePostScreenVM -> CreatePostScreenVM : write log Exceptions
     CreatePostScreenVM --> Caller: Returns
     deactivate CreatePostScreenVM
     deactivate Caller
@@ -177,7 +177,7 @@ alt #POSITIVERESPONSE (TRY)
     CreatePostScreenVM -> CreatePostScreenVM: add the text data to the titleField controller.
     CreatePostScreenVM --> Caller: Returns
 else #NEGATIVEERESPONSE (CATCH)
-    CreatePostScreenVM -> CreatePostScreenVM : Write exception logs
+    CreatePostScreenVM -> CreatePostScreenVM : write log Exceptions
     CreatePostScreenVM --> Caller: Returns
     deactivate CreatePostScreenVM
     deactivate Caller
@@ -216,7 +216,7 @@ alt #POSITIVERESPONSE (TRY)
     CreatePostScreenVM -> CreatePostScreenVM: Add the text data to the descriptionField controller.
     CreatePostScreenVM --> Caller: Returns
 else #NEGATIVEERESPONSE (CATCH)
-    CreatePostScreenVM -> CreatePostScreenVM : Write exception logs
+    CreatePostScreenVM -> CreatePostScreenVM : write log Exceptions
     CreatePostScreenVM --> Caller: Returns
     deactivate CreatePostScreenVM
     deactivate Caller

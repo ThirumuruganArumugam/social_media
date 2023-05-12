@@ -47,7 +47,7 @@ alt (TRY)
     end
 
 else #NEGATIVEERESPONSE (CATCH)
-    CreatePostScreen -> CreatePostScreen : Write exception logs
+    CreatePostScreen -> CreatePostScreen : write log Exceptions
     CreatePostScreen --> User: Returns
     deactivate CreatePostScreen
     deactivate User

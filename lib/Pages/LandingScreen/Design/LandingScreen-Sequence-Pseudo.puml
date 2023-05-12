@@ -35,7 +35,7 @@ alt #POSITIVERESPONSE IF (event is NavigatorPush)
     end
 
 else #NEGATIVEERESPONSE (CATCH)
-    LandingScreen -> LandingScreen : Write exception logs
+    LandingScreen -> LandingScreen : write log Exceptions
     LandingScreen --> User: Returns
     deactivate LandingScreen
     deactivate User

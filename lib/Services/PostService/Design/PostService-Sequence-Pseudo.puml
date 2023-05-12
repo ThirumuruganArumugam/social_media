@@ -29,7 +29,7 @@ alt #POSITIVERESPONSE (TRY)
     PostService -> PostService : Invoke **getAPIServiceResult(response)**\nand store in **result**
     PostService --> Caller : Returns **ServiceResult**
 else #NEGATIVEERESPONSE (CATCH)
-    PostService -> PostService : Write exception logs
+    PostService -> PostService : write log Exceptions
     PostService --> Caller: Return ServiceResult with status code\n**SystemException** and **message** exception to string
     deactivate PostService
     deactivate Caller
@@ -82,7 +82,7 @@ alt #POSITIVERESPONSE (TRY)
     PostService -> PostService : Invoke **getAPIServiceResult(response)**\nand store in **result**
     PostService --> Caller : Returns **ServiceResult**
 else #NEGATIVEERESPONSE CATCH
-    PostService -> PostService : write Exception logs
+    PostService -> PostService : write log Exceptions
     PostService --> Caller: Return ServiceResult with status code\n**SystemException** and **message** exception to string
     deactivate PostService
     deactivate Caller

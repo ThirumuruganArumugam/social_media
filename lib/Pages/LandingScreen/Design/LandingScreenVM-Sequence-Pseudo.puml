@@ -36,7 +36,7 @@ alt #POSITIVERESPONSE (TRY)
 LandingScreenVM -> LandingScreenVM: Set **@isLoading** as false
 LandingScreenVM --> Caller: Returns
 else #NEGATIVEERESPONSE (CATCH)
-    LandingScreenVM -> LandingScreenVM : write Exception Logs
+    LandingScreenVM -> LandingScreenVM : write log Exceptions
     LandingScreenVM --> Caller: Returns
     deactivate LandingScreenVM
     deactivate Caller
@@ -135,7 +135,7 @@ alt #POSITIVERESPONSE (TRY)
 LandingScreenVM -> LandingScreenVM : Navigator to Create Post Screen
 LandingScreenVM --> Caller: Returns
 else #NEGATIVEERESPONSE (CATCH)
-    LandingScreenVM -> LandingScreenVM : write Exception Logs
+    LandingScreenVM -> LandingScreenVM : write log Exceptions
     LandingScreenVM --> Caller: Returns
     deactivate LandingScreenVM
     deactivate Caller
