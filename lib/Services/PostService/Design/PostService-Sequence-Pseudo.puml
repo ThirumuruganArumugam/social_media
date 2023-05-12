@@ -80,7 +80,7 @@ alt #POSITIVERESPONSE (TRY)
     deactivate Server
     PostService -> PostService : Store the respose in **response** variable
     PostService -> PostService : Invoke **getAPIServiceResult(response)**\nand store the value in **result**
-    PostService --> Caller : Returns **result**
+    PostService --> Caller : Returns the **result**
 else #NEGATIVEERESPONSE CATCH
     PostService -> PostService : write Exception logs
     PostService --> Caller: Return ServiceResult with status code\n"SystemException" and message exception to string
