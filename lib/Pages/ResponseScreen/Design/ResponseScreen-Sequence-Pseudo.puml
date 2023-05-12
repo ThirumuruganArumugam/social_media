@@ -91,7 +91,7 @@ ResponseScreen -> ResponseScreenVM: Invoke **navigateBackToLandingScreen()**
 activate ResponseScreenVM
 ResponseScreenVM --> ResponseScreen: Returns
 deactivate ResponseScreenVM
-ResponseScreen -> User: Display **LandingScreen**
+ResponseScreen --> User: Display **LandingScreen**
 deactivate ResponseScreen
 deactivate User
 

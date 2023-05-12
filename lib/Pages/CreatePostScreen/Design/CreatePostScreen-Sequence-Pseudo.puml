@@ -170,7 +170,7 @@ end note
 newpage Text Field for Description
 autonumber
 hide footbox
-User -> CreatePostScreen: Enter Text in the Text Field
+User -> CreatePostScreen: User enters Text in the Text Field
 activate User
 activate CreatePostScreen
 CreatePostScreen -> CreatePostScreenVM: Invoke **onDescriptionChange()**
@@ -192,7 +192,7 @@ end note
 newpage Text Field for Title
 autonumber
 hide footbox
-User -> CreatePostScreen: Enter Text in the Text Field
+User -> CreatePostScreen: User enters Text in the Text Field
 activate User
 activate CreatePostScreen
 CreatePostScreen -> CreatePostScreenVM: Invoke **onTitleChange()**
