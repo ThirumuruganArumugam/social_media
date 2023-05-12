@@ -21,9 +21,9 @@ Caller -> currentDate: Invoke **showCurrentDate()**
 activate Caller
 activate currentDate
 alt TRY
-currentDate -> currentDate: Initialize a new DateTime using **DateTime.now()** and assign it to a variable
-currentDate -> currentDate: Initialize a DateFormat using **DateFormat()** and assign it to a variable
-currentDate -> currentDate: Format the DateTime variable using **format()** method
+currentDate -> currentDate: Initialize a new DateTime using **DateTime.now()** and assign it to a variable of type DateTime
+currentDate -> currentDate: Initialize a DateFormat using **DateFormat()** and assign it to a variable of type DateFormat
+currentDate -> currentDate: Format the DateTime variable using **format()** method of type String
 currentDate --> Caller: Return **current date**
 deactivate Caller
 deactivate currentDate
