@@ -20,16 +20,13 @@ hide footbox
 Caller -> PostBOExtension : Invoke **sortPostsByDate()**
 activate Caller
 activate PostBOExtension
-PostBOExtension -> Utilities : Sort the **@tempListOfPosts** using **sort()** and\nuse **CompareTo()** to compare **date**
-activate Utilities
-Utilities -> PostBOExtension : Returns
-deactivate Utilities
-PostBOExtension --> Caller : Returnss **List<PostBO>**
+PostBOExtension -> PostBOExtension : Sort the **@tempListOfPosts**
+PostBOExtension --> Caller : Returns
 deactivate PostBOExtension
 deactivate Caller
 
 ==Pseudocode==
 hnote across
- SORT the **@tempListOfPosts** using **sort()** and inside **sort()**,pass the **date** to **compareTo()** to compare.
+ SORT the **@tempListOfPosts** using **sort()** and use **compareTo()** method to compare **date** 
 end note
  @enduml

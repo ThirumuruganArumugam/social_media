@@ -20,17 +20,17 @@ hide footbox
 Caller -> CreatePostScreenVM: Invoke **createNewPost()**
 activate Caller
 activate CreatePostScreenVM
-alt #POSITIVERESPONSE (TRY)
+alt (TRY)
+    CreatePostScreenVM -> CreatePostScreenVM: Create an instance newPost for createPost (Post: PostBO)\nand assign it to a variable
     CreatePostScreenVM -> CreatePostScreenVM: Set **@isLoading** is true
-    CreatePostScreenVM -> Services: Invoke **createPost(Post: PostBO)**
+    CreatePostScreenVM -> Services: Assign the variable to the service as a parameter
     activate Services
     Services --> CreatePostScreenVM : Returns  **ServiceResult<bool>**
     deactivate Services
-    alt #POSITIVERESPONSE (if status code in ServiceResult is OK)
-        CreatePostScreenVM -> CreatePostScreenVM : Assign **List<PostBO>** to **originalListOfPosts** and **@tempListOfPosts**
-        CreatePostScreenVM -> CreatePostScreenVM : Assign the **statusCode** as the **data** to the **navigationStream**.  
+    alt #POSITIVERESPONSE (if status code is OK)
+        CreatePostScreenVM -> CreatePostScreenVM : Set the **data** as **statusCode** to the **navigationStream**.  
         CreatePostScreenVM --> Caller : Returns
-    else #NEGATIVEERESPONSE (if status code in ServiceResult is Bad Request)
+    else #NEGATIVEERESPONSE (if status code is Bad Request)
         CreatePostScreenVM -> CreatePostScreenVM : Assign the **statusCode** as the **data** to the **navigationStream**.
         CreatePostScreenVM --> Caller : Returns
     end
@@ -44,6 +44,8 @@ end
 ==Pseudocode==
 hnote across
 **TRY**
+
+    CREATE an instance newPost for createPost (Post: PostBO)\nand assign it to a variable
 
     SET **@isLoading** is true
 
@@ -88,18 +90,27 @@ hide footbox
 Caller -> CreatePostScreenVM: Invokes **navigateToResponseScreen()**
 activate Caller
 activate CreatePostScreenVM
+alt TRY
 CreatePostScreenVM -> CreatePostScreenVM : add the **NavigatorPush()** method to the navigation stream\nand assign **statusCode** to the **data** parameter 
-CreatePostScreenVM -> Caller: Display **Response** Screen
+CreatePostScreenVM -> Caller: Returns
+else #NEGATIVEERESPONSE (CATCH)
+    CreatePostScreenVM -> CreatePostScreenVM : Write exception logs
+    CreatePostScreenVM --> Caller: Returns
+    deactivate CreatePostScreenVM
+    deactivate Caller
+end
+
 deactivate Caller
 deactivate CreatePostScreenVM
 ==Pseudocode==
 hnote across
 **TRY**
-    INVOKE **navigateToCreatePostScreen()** method
 
     ADD the **NavigatorPush()** method which has pageconfig of **ResponseScreen** and data as **status code** to the navgation stream
 
-    DISPLAY the **ResponseScreen**
+**CATCH**
+
+    INVOKE **writeException()** on the exception object ex.
 end note
 
 newpage **CreatePostScreenVM - navigateToLandingScreen()**
@@ -122,18 +133,24 @@ hide footbox
 Caller -> CreatePostScreenVM: Invokes **navigateToLandingScreen()**
 activate Caller
 activate CreatePostScreenVM
+alt TRY
 CreatePostScreenVM -> CreatePostScreenVM : add the **NavigatorPop()** method to the navigation stream
-CreatePostScreenVM -> Caller: Display **Landing** Screen
-deactivate Caller
-deactivate CreatePostScreenVM
+CreatePostScreenVM -> Caller: Returns
+else #NEGATIVEERESPONSE (CATCH)
+    CreatePostScreenVM -> CreatePostScreenVM : Write exception logs
+    CreatePostScreenVM --> Caller: Returns
+    deactivate CreatePostScreenVM
+    deactivate Caller
+end
 ==Pseudocode==
 hnote across
 **TRY**
-    INVOKE **navigateToLandingScreen()** method
 
     ADD the **NavigatorPop()** method
 
-    DISPLAY the **LandingScreen**
+**CATCH**
+
+    INVOKE **writeException()** on the exception object ex.
 end note
 
 newpage **CreatePostScreenVM - onTitleChange(title: String)**
@@ -156,25 +173,12 @@ hide footbox
 Caller -> CreatePostScreenVM: Invokes **onTitleChange(String: title)**
 activate Caller
 activate CreatePostScreenVM
-alt #POSITIVERESPONSE **IF title is not empty**
     CreatePostScreenVM -> CreatePostScreenVM: add the textfield data to the text field controller.
-else #POSITIVERESPONSE **IF title is empty**
-    CreatePostScreenVM -> CreatePostScreenVM: add the textfield data to the text field controller.
-end
-CreatePostScreenVM --> Caller: Returnss
+    CreatePostScreenVM --> Caller: Returns
 deactivate CreatePostScreenVM
 deactivate Caller
 ==Pseudocode==
 hnote across
-**TRY**
-    INVOKE **onTitleChange(description: String)** method
-
-    **IF title is not empty**
-
-        Add the textfield data to the text field contorller
-
-    **IF title is empty**
-
         Add the textfield data to the text field contorller
 end note
 
@@ -195,28 +199,15 @@ skinparam sequence{
 }
 autonumber 1
 hide footbox
-Caller -> CreatePostScreenVM: Invokes **onDescriptionChange(description: String)**
+Caller -> CreatePostScreenVM: Invoke **onDescriptionChange(description: String)**
 activate Caller
 activate CreatePostScreenVM
-alt #POSITIVERESPONSE **IF description is not empty**
     CreatePostScreenVM -> CreatePostScreenVM: add the textfield data to the text field controller.
-else #POSITIVERESPONSE **IF description is empty**
-    CreatePostScreenVM -> CreatePostScreenVM: add the textfield data to the text field controller.
-end
-CreatePostScreenVM --> Caller: Returnss
+    CreatePostScreenVM --> Caller: Returns
 deactivate CreatePostScreenVM
 deactivate Caller
 ==Pseudocode==
 hnote across
-**TRY**
-    INVOKE **onDescriptionChange(description: String)** method
-
-    **IF description is not empty**
-
-        Add the textfield data to the text field contorller
-
-    **IF description is empty**
-
         Add the textfield data to the text field contorller
 end note
 @enduml

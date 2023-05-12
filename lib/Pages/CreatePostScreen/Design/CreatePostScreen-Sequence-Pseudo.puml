@@ -15,43 +15,35 @@ skinparam sequence{
 }
 
 title   **CreatePostScreen - initState()**
+actor User
 autonumber 1
 hide footbox
 User -> CreatePostScreen: Invoke **initState()**
 activate User
 activate CreatePostScreen
-alt #POSITIVERESPONSE (TRY)
-    CreatePostScreen -> CreatePostScreenVM : Invoke **createNewPosts()**
-    activate CreatePostScreenVM
-    CreatePostScreenVM --> CreatePostScreen : Returns
-    deactivate CreatePostScreenVM
-    alt #NUETRALRESPONSE (if @isLoading is true)
-        CreatePostScreen --> User : Display Loading view
-    end
-    CreatePostScreen --> User : Returns List of Posts from **@tempListOfPosts**
-
+alt (TRY)
     CreatePostScreen -> CreatePostScreen: Add a listener to the navigationStream and listen to the events
 
     alt #POSITIVERESPONSE IF (event is NavigatorPush)
         CreatePostScreen-> CreatePostScreen: Push the context to the **Response**\n**Screen** and data as **statuscode**.
-        CreatePostScreen --> User: Returnss
+        CreatePostScreen --> User: Returns
     else #POSITIVERESPONSE IF (event is NavigatorPop) 
         CreatePostScreen-> CreatePostScreen: Pop the context to the **Landing Screen**.
-        CreatePostScreen --> User: Returnss
+        CreatePostScreen --> User: Returns
     end
 
     CreatePostScreen -> CreatePostScreen: Add a listener to the textfieldcontroller.Stream and listen to the events
 
-    alt #POSITIVERESPONSE event is TitleText
+    alt #POSITIVERESPONSE IF (event is TitleText)
         CreatePostScreen-> CreatePostScreen: Assign the event data to the text editing controller.
-        CreatePostScreen --> User: Returnss
+        CreatePostScreen --> User: Returns
     end
 
     CreatePostScreen -> CreatePostScreen: Add a listener to the textfieldcontroller.Stream and listen to the events
 
-    alt #POSITIVERESPONSE event is DescriptionText
+    alt #POSITIVERESPONSE IF (event is DescriptionText)
         CreatePostScreen-> CreatePostScreen: Assign the event data to the text editing controller.
-        CreatePostScreen --> User: Returnss
+        CreatePostScreen --> User: Returns
     end
 
 else #NEGATIVEERESPONSE (CATCH)
@@ -65,46 +57,33 @@ end
 hnote across
 **TRY**
     
-        INVOKE **createNewPosts()** using the **CreatePostScreenVM** instance
-        
-        **IF isLoading is true**
-
-                DISPLAY the loading view
-
-        **IF @isError is true**
-
-                DISPLAY the **@errorMessage**
-        
-        DISPLAY the user list from **@tempListOfPosts**
-
         Add a listener to the **navigationStream** and listen to the **events**
         
-        **EVENT is NavigatorPush**
+        **IF event is NavigatorPush**
 
                 Push the context to the **ResponseScreen** with data as **status code**
         
-        **EVENT is NavigatorPop**
+        **IF event is NavigatorPop**
 
                 Pop the context to the **LandingScreen Screen**
         
         Add a listener to the **textfieldcontroller** and listen to the **events**
     
-        **EVENT is TitleText**
+        **IF event is TitleText**
 
                 Assign the event data to the controller
         
         Add a listener to the **textfieldcontroller** and listen to the **events**
     
-        **EVENT is DescriptionText**
+        **IF event is DescriptionText**
 
                 Assign the event data to the controller
 
 **CATCH**
 
-    INVOKE **writeException()** on the exception object ex.
+    INVOKE **writeException()** on the exception object **ex**.
 
 end note
-
 
 newpage  **CreatePostScreen - dispose()**
 !define POSITIVERESPONSE 90EE90
@@ -123,26 +102,67 @@ skinparam sequence{
 
 autonumber 1
 hide footbox
-User -> CreatePostScreen: Invokes **dispose()**
+User -> CreatePostScreen: Invoke **dispose()**
 activate User
 activate CreatePostScreen
-CreatePostScreen -> CreatePostScreen: Dispose the **navigationStream Controller**
+CreatePostScreen -> CreatePostScreen: Dispose the **navigationStream**
 CreatePostScreen -> CreatePostScreen: Dispose the **texteditingcontroller** for **title**.
 CreatePostScreen -> CreatePostScreen: Dispose the **texteditingcontroller** for **description**.
-CreatePostScreen --> User: Returnss
+CreatePostScreen --> User: Returns
 deactivate CreatePostScreen
 deactivate User
 
 ==Pseudocode==
 hnote across
 
-INVOKE **dispose()** method
+USING **dispose()** method dispose the **navigationStream**
 
-USING **.dispose()** method dispose the **navigationStream Controller**
+USING **dispose()** method dispose the **texteditingcontroller** for the **title**
 
-USING **.dispose()** method dispose the **texteditingcontroller** for the **title**
+USING **dispose()** method dispose the **texteditingcontroller** for the **description** 
 
-USING **.dispose()** method dispose the **texteditingcontroller** for the **description** 
+end note
+
+newpage Create Post
+autonumber
+hide footbox
+User -> CreatePostScreen: **Create** Button.Clicked
+activate User
+activate CreatePostScreen
+CreatePostScreen -> CreatePostScreenVM: Invoke **navigateToResponseScreen()**
+activate CreatePostScreenVM
+CreatePostScreenVM --> CreatePostScreen: Returns
+deactivate CreatePostScreenVM
+CreatePostScreen -> User: Display **ResponseScreen**
+deactivate CreatePostScreen
+deactivate User
+==Pseudocode==
+hnote across
+
+INVOKE **navigateToResponseScreen()** method
+
+DISPLAY **ResponseScreen** to the User 
+
+end note
+newpage goBack Post
+autonumber
+hide footbox
+User -> CreatePostScreen: **goBack** Button.Clicked
+activate User
+activate CreatePostScreen
+CreatePostScreen -> CreatePostScreenVM: Invoke **navigateBackToLandingScreen()**
+activate CreatePostScreenVM
+CreatePostScreenVM --> CreatePostScreen: Returns
+deactivate CreatePostScreenVM
+CreatePostScreen -> User: Display **LandingScreen**
+deactivate CreatePostScreen
+deactivate User
+==Pseudocode==
+hnote across
+
+INVOKE **navigateBackToLandingScreen()** method
+
+DISPLAY **LandingScreen** to the User 
 
 end note
 @enduml

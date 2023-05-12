@@ -26,31 +26,32 @@ alt #POSITIVERESPONSE (TRY)
     Server --> PostService : Returns the response
     deactivate Server
     PostService -> PostService : Store the respose in **response** variable
-    PostService -> PostService : Invoke **getAPIServiceResult** by using **response** and store the value in **result**
-    PostService --> Caller : Return **result**
+    PostService -> PostService : Invoke **getAPIServiceResult(response)**\nand store the value in **result**
+    PostService --> Caller : Returns the **result**
 else #NEGATIVEERESPONSE (CATCH)
     PostService -> PostService : Write exception logs
-    PostService --> Caller: Returns
+    PostService --> Caller: Return ServiceResult with status code\n"SystemException" and message exception to string
     deactivate PostService
     deactivate Caller
 end
+==Pseudocode==
+hnote across
+**TRY**
 
-    ==Pseudocode==
-    hnote across
-    **TRY**
+    EXECUTE _dio.get() with the URL as **"https://dummyjson.com/getPosts"** and with header's key **authkey** and value as **123**
 
-        EXECUTE _dio.get() with the URL as **"https://dummyjson.com/getPosts"** and with header's key **authkey** and value as **123**
+    STORE the response in a variable **response**
 
-        STORE the response in a variable **response**
+    EXECUTE the method **getAPIServiceResult** by passing content type as  'List<UserBO>' and STORE inside the **result** variable
 
-        EXECUTE the method **getAPIServiceResult** by passing content type as  'List<UserBO>' and STORE inside the **result** variable
+    RETURN the **result**
 
-        Return the **result**
+**CATCH**
 
-    **CATCH**
-
-        INVOKE **writeException()** on the exception object ex.
-    end note
+    INVOKE **writeException()** on the exception object ex.
+        
+    RETURN ServiceResult with status code\n"SystemException" and message exception to string
+end note
 
 newpage **PostService - createPost()**
 !define POSITIVERESPONSE 90EE90
@@ -78,11 +79,11 @@ alt #POSITIVERESPONSE (TRY)
     Server --> PostService : Returns the response
     deactivate Server
     PostService -> PostService : Store the respose in **response** variable
-    PostService -> PostService : Invoke **getAPIServiceResult** by using **response**\nand store the value in **result**
+    PostService -> PostService : Invoke **getAPIServiceResult(response)**\nand store the value in **result**
     PostService --> Caller : Returns **result**
 else #NEGATIVEERESPONSE CATCH
     PostService -> PostService : write Exception logs
-    PostService --> Caller: Returns
+    PostService --> Caller: Return ServiceResult with status code\n"SystemException" and message exception to string
     deactivate PostService
     deactivate Caller
 end
@@ -101,5 +102,7 @@ hnote across
 **CATCH** 
    
     INVOKE **writeException()** on the exception object ex.
+
+    RETURN ServiceResult with status code\n"SystemException" and message exception to string
 end note
 @enduml

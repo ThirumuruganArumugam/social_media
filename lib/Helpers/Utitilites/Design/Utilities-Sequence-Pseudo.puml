@@ -17,25 +17,25 @@ skinparam sequence{
 title   **Utilities - showCurrentDate()**
 autonumber 1
 hide footbox
-User -> currentDate: User calls **showCurrentDate()** method
-activate User
+Caller -> currentDate: Invoke **showCurrentDate()**
+activate Caller
 activate currentDate
-currentDate -> currentDate: Create a new DateTime
-currentDate -> currentDate: Create a new DateFormat
-currentDate -> currentDate: Format the DateTime using the **format()** method
-currentDate -> User: Returns **Date**
-deactivate User
+currentDate -> currentDate: Create a new DateTime using **DateTime.now()** and assign it to a variable
+currentDate -> currentDate: Create a DateFormat using **DateFormat()** and assign it to a variable
+currentDate -> currentDate: Format the DateTime variable using **format()** method
+currentDate -> Caller: Return **current date**
+deactivate Caller
 deactivate currentDate
 
 ==PseudoCode==
 hnote across
 
-GET the current date and time
+GET the current date using the **DateTime.now()** and assign it to a variable named **now**
 
-CREATE a formatter to format the date as **dd-MM-yyyy**
+USING the **DateFormat()** to format the date as **dd-MM-yyyy**
 
-FORMAT the current date using the formatter
+FORMAT the DateTime varibale named **now** using the **format()** method
 
-Returns the **original Date**
+RETURN the **current date**
 end note
 @enduml

@@ -15,6 +15,7 @@ skinparam sequence{
 }
 
 title   **LandingScreen - initState()**
+actor User
 autonumber 1
 hide footbox
 User -> LandingScreen: Invoke **initState()**
@@ -26,17 +27,15 @@ alt #POSITIVERESPONSE (TRY)
     LandingScreenVM --> LandingScreen : Returns
     deactivate LandingScreenVM
     alt #NUETRALRESPONSE IF **@isLoading is true**
-        LandingScreen --> User : Display **Loading** view
-    else #NEGATIVEERESPONSE IF **@isError is true**
-        LandingScreen --> User : Display **@errorMessage** and **@statusCode**
+        LandingScreen --> User : Display **Loader**
     end
     LandingScreen --> User : Display List of Posts from **@tempListOfPosts**
 
-    LandingScreen -> LandingScreen: Add a listener to the navigationStream and listen to the events
+    LandingScreen -> LandingScreen: Add a listener to the navigationStream and listen to the event
 
-alt #POSITIVERESPONSE event is NavigatorPush
+alt #POSITIVERESPONSE IF (event is NavigatorPush)
     LandingScreen-> LandingScreen: Push the context to the **Create Post Screen**.
-    LandingScreen --> User: Returnss
+    LandingScreen --> User: Returns
     end
 
 else #NEGATIVEERESPONSE (CATCH)
@@ -54,22 +53,18 @@ hnote across
     
     **IF @isLoading is true**
 
-        DISPLAY the loading view
+        DISPLAY loader
 
-    **IF @isError is true**
-    
-        DISPLAY the **@errorMessage** and **@statusCode**
-    
     DISPLAY the List of Posts from **@tempListOfPosts**
 
     Add a listener to the **navigationStream** and listen to the **events**
     
-    **EVENT is NavigatorPush**
+    **IF event is NavigatorPush**
 
         Push the context to the **CreatePost** Screen
 
 **CATCH**
-    
+
     INVOKE **writeException()** on the exception object ex.
 
 end note
@@ -91,16 +86,59 @@ skinparam sequence{
 
 autonumber 1
 hide footbox
-User -> LandingScreen: Invokes **dispose()** method
+User -> LandingScreen: Invoke **dispose()** method
 activate User
 activate LandingScreen
-LandingScreen -> LandingScreen: Disposes the **navigationStream Controller**
-LandingScreen --> User: Returnss
+LandingScreen -> LandingScreen: Disposes the **navigationStream**
+LandingScreen --> User: Returns
 deactivate LandingScreen
 deactivate User
 
 ==Pseudocode==
 hnote across    
-    USING **.dispose()** method dispose the **navigationStream Controller**
+    USING **dispose()** method dispose the **navigationStream**
+end note
+
+newpage Sort Post Button
+autonumber
+hide footbox
+User -> LandingScreen: **Sort** Button.Clicked
+activate User
+activate LandingScreen
+LandingScreen -> LandingScreenVM: Invoke **sortPosts()**
+activate LandingScreenVM
+LandingScreenVM --> LandingScreen: Returns
+deactivate LandingScreenVM
+LandingScreen -> User: Display Sorted Posts
+deactivate LandingScreen
+deactivate User
+==Pseudocode==
+hnote across
+
+INVOKE **sortPosts()** method
+
+DISPLAY **Sorted posts** to the User 
+
+end note
+
+newpage Create Post Button
+autonumber
+hide footbox
+User -> LandingScreen: **Post** Button.Clicked
+activate User
+activate LandingScreen
+LandingScreen -> LandingScreenVM: Invoke **navigateToCreatePostScreen()**
+activate LandingScreenVM
+LandingScreenVM --> LandingScreen: Returns
+deactivate LandingScreenVM
+LandingScreen -> User: Display **CreatePostScreen**
+deactivate LandingScreen
+deactivate User
+==Pseudocode==
+hnote across
+
+INVOKE **navigateToCreatePostScreen()** method
+
+DISPLAY **CreatePostScreen** to the User 
 end note
 @enduml

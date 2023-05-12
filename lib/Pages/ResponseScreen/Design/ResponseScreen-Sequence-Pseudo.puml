@@ -16,26 +16,23 @@ skinparam sequence{
 
 title   **ResponseScreen - initState()**
 autonumber 1
+actor User
 hide footbox
 User -> ResponseScreen: Invoke **initState()**
 activate User
 activate ResponseScreen
-alt (TRY)
+alt #POSITIVERESPONSE (TRY)
     ResponseScreen -> ResponseScreenVM : Invoke the **Contructor()** and pass\nthe parameter as statusCode.
     activate ResponseScreenVM
     ResponseScreenVM --> ResponseScreen : Returns
     deactivate ResponseScreenVM
-    alt #POSITIVERESPONSE (IF statusCode is 200)
-        ResponseScreen --> User : Display **@successMessage**
-    else #NEGATIVEERESPONSE (ELSE)
-        ResponseScreen --> User : Display **@failureMessage** and **@statusCode**.
-    end
-
+    ResponseScreen --> User : Returns
+    
     ResponseScreen -> ResponseScreen: Add a listener to the navigationStream and listen to the events
 
     alt #POSITIVERESPONSE event is NavigatorPopAndRemoveUntil
-        ResponseScreen-> ResponseScreen: Pop the context to the **Landing Screen**.
-        ResponseScreen --> User: Returnss
+        ResponseScreen-> ResponseScreen: Popuntil the context to the **Landing Screen**.
+        ResponseScreen --> User: Returns
     end
 
 else #NEGATIVEERESPONSE (CATCH)
@@ -49,14 +46,6 @@ hnote across
 **TRY**
     
     INVOKE **Constructor()** using the **ResponseScreenVM** instance and pass the **statusCode** as parameter
-    
-    **IF statusCode is 200**
-    
-    DISPLAY the **@successMessage** 
-    
-    **ELSE**
-    
-    DISPLAY the **@failureMessage** and **@statusCode**
 
     Add a listener to the **navigationStream** and listen to the **events**
     
@@ -87,15 +76,39 @@ skinparam sequence{
 
 autonumber 1
 hide footbox
-User -> ResponseScreen: Invokes **dispose()** method
+User -> ResponseScreen: Invoke **dispose()**
 activate User
 activate ResponseScreen
-ResponseScreen -> ResponseScreen: dispose the **navigationStream Controller**
-ResponseScreen --> User: Returnss
+ResponseScreen -> ResponseScreen: dispose the **navigationStream**
+ResponseScreen --> User: Returns
 deactivate ResponseScreen
 deactivate User
 
 ==Pseudocode==
 hnote across
-    USING **.dispose()** method dispose the **navigationStream Controller**
+    USING **dispose()** method dispose the **navigationStream**
 end note
+
+newpage BackToHome Post
+autonumber
+hide footbox
+User -> ResponseScreen: **BackToHome** Button.Clicked
+activate User
+activate ResponseScreen
+ResponseScreen -> ResponseScreenVM: Invoke **navigateBackToLandingScreen()**
+activate ResponseScreenVM
+ResponseScreenVM --> ResponseScreen: Returns
+deactivate ResponseScreenVM
+ResponseScreen -> User: Display **LandingScreen**
+deactivate ResponseScreen
+deactivate User
+
+==Pseudocode==
+hnote across
+
+INVOKE **navigateBackToLandingScreen()** method
+
+DISPLAY **LandingScreen** to the User 
+
+end note
+@enduml

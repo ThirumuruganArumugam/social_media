@@ -22,15 +22,15 @@ activate Caller
 activate LandingScreenVM
 alt #POSITIVERESPONSE (TRY)
     LandingScreenVM -> LandingScreenVM: Set **@isLoading** is true
-    LandingScreenVM -> Services: Invoke **getPosts()**
-    activate Services
-    Services --> LandingScreenVM : Returns  **ServiceResult<List<PostBO>>**
-    deactivate Services
-    alt #POSITIVERESPONSE (if status code in ServiceResult is OK)
+    LandingScreenVM -> PostService: Invoke **getPosts()**
+    activate PostService
+    PostService --> LandingScreenVM : Return  **ServiceResult<List<PostBO>>**
+    deactivate PostService
+    alt #POSITIVERESPONSE (if status code is OK)
         LandingScreenVM -> LandingScreenVM : Set **@isError** to false
         LandingScreenVM -> LandingScreenVM : Assign **List<PostBO>** to **@originalListOfPosts** and **@tempListOfPosts**
         LandingScreenVM --> Caller : Returns
-    else #NEGATIVEERESPONSE (if status code in ServiceResult is Bad Request)
+    else #NEGATIVEERESPONSE (if status code is Bad Request)
         LandingScreenVM -> LandingScreenVM : Set serviceResult message in **@errorMessage**
         LandingScreenVM -> LandingScreenVM : Set **@isError** to true
         LandingScreenVM --> Caller : Returns
@@ -54,13 +54,13 @@ hnote across
     
     Returns the  **ServiceResult<List<PostBO>>**
 
-    **IF the the status code in serviceResult is OK**
+    **IF the the status code is OK**
     
         SET the **@isError** is false
     
         ASSIGN the **List<PostBO>** to the variable **@originalListOfPosts** and **@tempListOfPosts**
     
-    **IF status code in ServiceResult is Bad Request**
+    **IF status code is Bad Request**
         
         SET the serviceResult message in **@errorMessage**
     
@@ -68,7 +68,7 @@ hnote across
     
 **CATCH**
     
-    INVOKE **writeException()** on the exception object ex.
+    INVOKE **writeException()** on the exception object **ex**.
 end note
 
 newpage **LandingScreenVM - sortPosts()**
@@ -92,11 +92,10 @@ Caller -> LandingScreenVM: Invoke **sortPosts()**
 activate Caller
 activate LandingScreenVM
 alt #POSITIVERESPONSE (TRY)
-    LandingScreenVM -> PostBOExtention: Invoke **sortPostsByDate()**
+    LandingScreenVM -> PostBOExtention: INVOKE **@tempListOfPosts.sortPostsByDate()**
     activate PostBOExtention
-    PostBOExtention --> LandingScreenVM : Returns **List<PostBO>**
+    PostBOExtention --> LandingScreenVM : Return sorted **@tempListOfPosts**
     deactivate PostBOExtention
-    LandingScreenVM -> LandingScreenVM: Set it to **@tempListOfPosts**
     LandingScreenVM --> Caller: Returns 
 
 else #NEGATIVEERESPONSE (CATCH)
@@ -109,15 +108,14 @@ end
 ==Pseudocode==
 hnote across
 **TRY**
+
     INVOKE **@tempListOfPosts.sortPostsByDate()** method
 
-    Returns the **List<PostBO>**
-
-    SET the **List<PostBO>** to the setMethod **@tempListOfPosts**
+    RETURN the sorted **@tempLostOfPosts**
 
 **CATCH**
 
-    INVOKE **writeException()** on the exception object ex.
+    INVOKE **writeException()** on the exception object **ex**.
 end note
 
 newpage **LandingScreenVM - navigateToCreatePostScreen()**
@@ -139,17 +137,24 @@ hide footbox
 Caller -> LandingScreenVM: Invokes **navigateToCreatePostScreen()**
 activate Caller
 activate LandingScreenVM
+alt #POSITIVERESPONSE (TRY)
 LandingScreenVM -> LandingScreenVM : add the **NavigatorPush()** method to the navigation stream
-LandingScreenVM -> Caller: Display **Create Post** Screen
-deactivate Caller
-deactivate LandingScreenVM
+LandingScreenVM -> Caller: Returns
+else #NEGATIVEERESPONSE (CATCH)
+    LandingScreenVM -> LandingScreenVM : write Exception Logs
+    LandingScreenVM --> Caller: Returns
+    deactivate LandingScreenVM
+    deactivate Caller
+end
+
 ==Pseudocode==
 hnote across
 **TRY**
-    INVOKE **navigateToCreatePostScreen()** method
 
     ADD the **NavigatorPush()** method which has pageconfig of **CreatePost screen** and data to the navgation stream
 
-    DISPLAY the **CreatePost Screen**
+**CATCH**
+    
+    INVOKE **writeException()** on the exception object **ex**
 end note
 @enduml

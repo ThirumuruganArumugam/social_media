@@ -21,16 +21,24 @@ hide footbox
 Caller -> ResponseScreenVM: Invokes **navigateToLandingScreen()**
 activate Caller
 activate ResponseScreenVM
+alt #POSITIVERESPONSE (TRY)
 ResponseScreenVM -> ResponseScreenVM : add the **NavigatorPopAndRemoveUntil()** method\nto the navigation stream
-ResponseScreenVM -> Caller: Display **Landing** Screen
+ResponseScreenVM -> Caller: Returns
+else #NEGATIVEERESPONSE (CATCH)
+    ResponseScreenVM -> ResponseScreenVM : write Exception Logs
+    ResponseScreenVM --> Caller: Returns
+    deactivate ResponseScreenVM
+    deactivate Caller
+end
 deactivate Caller
 deactivate ResponseScreenVM
 ==Pseudocode==
 hnote across
 **TRY**
-    INVOKE **navigateToLandingScreen()** method
 
     ADD the **NavigatorPopAndRemoveUntil()** method which has pageconfig of **LandingScreen**
 
-    DISPLAY the **LandingScreen**
+**CATCH**
+
+    INVOKE **writeException()** on the exception object **ex**.
 end note
