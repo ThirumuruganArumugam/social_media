@@ -26,12 +26,8 @@ alt #POSITIVERESPONSE (TRY)
     activate LandingScreenVM
     LandingScreenVM --> LandingScreen : Returns
     deactivate LandingScreenVM
-    alt #NUETRALRESPONSE IF **@isLoading is true**
-        LandingScreen --> User : Display **Loader**
-    end
-    LandingScreen --> User : Display List of Posts from **@tempListOfPosts**
-
-    LandingScreen -> LandingScreen: Add a listener to the navigationStream and listen to the event
+    LandingScreen --> User : Display List of Posts
+    LandingScreen -> LandingScreen: Add a listener to the navigationStream
 
 alt #POSITIVERESPONSE IF (event is NavigatorPush)
     LandingScreen-> LandingScreen: Push the context to the **Create Post Screen**.
@@ -45,16 +41,12 @@ else #NEGATIVEERESPONSE (CATCH)
     deactivate User
 end
 
-==Pseudocode==
+==PSEUDOCODE - initState()==
 hnote across
 **TRY**
     
     INVOKE **fetchPosts()** using the **LandingScreenVM** instance
     
-    **IF @isLoading is true**
-
-        DISPLAY loader
-
     DISPLAY the List of Posts from **@tempListOfPosts**
 
     Add a listener to the **navigationStream** and listen to the **events**
@@ -89,12 +81,12 @@ hide footbox
 User -> LandingScreen: Invoke **dispose()** method
 activate User
 activate LandingScreen
-LandingScreen -> LandingScreen: Disposes the **navigationStream**
+LandingScreen -> LandingScreen: Dispose the **navigationStream**
 LandingScreen --> User: Returns
 deactivate LandingScreen
 deactivate User
 
-==Pseudocode==
+==PSEUDOCODE - dispose()==
 hnote across    
     USING **dispose()** method dispose the **navigationStream**
 end note
@@ -109,10 +101,10 @@ LandingScreen -> LandingScreenVM: Invoke **sortPosts()**
 activate LandingScreenVM
 LandingScreenVM --> LandingScreen: Returns
 deactivate LandingScreenVM
-LandingScreen -> User: Display Sorted Posts
+LandingScreen --> User: Display Sorted Posts
 deactivate LandingScreen
 deactivate User
-==Pseudocode==
+==PSEUDOCODE - Sort Post Button==
 hnote across
 
 INVOKE **sortPosts()** method
@@ -131,10 +123,11 @@ LandingScreen -> LandingScreenVM: Invoke **navigateToCreatePostScreen()**
 activate LandingScreenVM
 LandingScreenVM --> LandingScreen: Returns
 deactivate LandingScreenVM
-LandingScreen -> User: Display **CreatePostScreen**
+LandingScreen --> User: Display **CreatePostScreen**
 deactivate LandingScreen
 deactivate User
-==Pseudocode==
+
+==PSEUDOCODE - Create Post Button==
 hnote across
 
 INVOKE **navigateToCreatePostScreen()** method

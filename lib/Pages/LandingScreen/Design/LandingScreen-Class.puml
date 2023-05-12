@@ -9,9 +9,7 @@ package Pages{
             + @originalListOfPosts : List<PostBO>
             + @tempListOfPosts : List<PostBO>
             + @isLoading : bool
-            + @isError : bool
             + @errorMessage: String
-            + @statusCode: String
         }
         class LandingScreenVM{
             + fetchPosts(): Future<void>

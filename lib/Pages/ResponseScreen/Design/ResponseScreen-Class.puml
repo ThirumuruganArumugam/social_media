@@ -7,10 +7,10 @@ package Pages{
         class ResponseScreenModel{
             + @successMessage: String
             + @failureMessage: String
+            + @statusCode : int
             + @isVisible: bool
         }
         class ResponseScreenVM{
-            + Constructor(String: Status Code) : void
             + navigateToLandingScreen() : void
         }
         class ResponseScreen{

@@ -22,8 +22,8 @@ Caller -> ResponseScreenVM: Invokes **navigateToLandingScreen()**
 activate Caller
 activate ResponseScreenVM
 alt #POSITIVERESPONSE (TRY)
-ResponseScreenVM -> ResponseScreenVM : add the **NavigatorPopAndRemoveUntil()** method\nto the navigation stream
-ResponseScreenVM -> Caller: Returns
+ResponseScreenVM -> ResponseScreenVM : Navigate to the **Landing Screen**
+ResponseScreenVM --> Caller: Returns
 else #NEGATIVEERESPONSE (CATCH)
     ResponseScreenVM -> ResponseScreenVM : write Exception Logs
     ResponseScreenVM --> Caller: Returns
@@ -36,7 +36,7 @@ deactivate ResponseScreenVM
 hnote across
 **TRY**
 
-    ADD the **NavigatorPopAndRemoveUntil()** method which has pageconfig of **LandingScreen**
+    ADD the event **NavigatorPopAndRemoveUntil()** to the navigation stream object along with **parameter(pageconfig:LandingScreen.pageconfig, data: null)**
 
 **CATCH**
 

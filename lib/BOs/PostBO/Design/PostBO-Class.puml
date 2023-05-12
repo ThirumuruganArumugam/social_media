@@ -80,5 +80,5 @@ package Helpers{
     }
 }
 
-Utilities --> PostBOExtension
+Utilities <-- PostBOExtension
 @enduml

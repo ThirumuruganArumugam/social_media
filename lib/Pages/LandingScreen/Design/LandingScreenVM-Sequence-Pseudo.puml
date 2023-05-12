@@ -21,21 +21,19 @@ Caller -> LandingScreenVM: Invoke **fetchPosts()**
 activate Caller
 activate LandingScreenVM
 alt #POSITIVERESPONSE (TRY)
-    LandingScreenVM -> LandingScreenVM: Set **@isLoading** is true
+    LandingScreenVM -> LandingScreenVM: Set **@isLoading** as true
     LandingScreenVM -> PostService: Invoke **getPosts()**
     activate PostService
     PostService --> LandingScreenVM : Return  **ServiceResult<List<PostBO>>**
     deactivate PostService
-    alt #POSITIVERESPONSE (if status code is OK)
-        LandingScreenVM -> LandingScreenVM : Set **@isError** to false
-        LandingScreenVM -> LandingScreenVM : Assign **List<PostBO>** to **@originalListOfPosts** and **@tempListOfPosts**
+    alt #POSITIVERESPONSE (IF result.status code is OK)
+        LandingScreenVM -> LandingScreenVM : Set to the **@originalListOfPosts** and **@tempListOfPosts**.  
         LandingScreenVM --> Caller : Returns
-    else #NEGATIVEERESPONSE (if status code is Bad Request)
-        LandingScreenVM -> LandingScreenVM : Set serviceResult message in **@errorMessage**
-        LandingScreenVM -> LandingScreenVM : Set **@isError** to true
+    else #NEGATIVEERESPONSE ELSE
+        LandingScreenVM -> LandingScreenVM : Set the **@errorMessage**
         LandingScreenVM --> Caller : Returns
     end
-LandingScreenVM -> LandingScreenVM: Set **@isLoading** is false
+LandingScreenVM -> LandingScreenVM: Set **@isLoading** as false
 LandingScreenVM --> Caller: Returns
 else #NEGATIVEERESPONSE (CATCH)
     LandingScreenVM -> LandingScreenVM : write Exception Logs
@@ -44,7 +42,7 @@ else #NEGATIVEERESPONSE (CATCH)
     deactivate Caller
 end
 
-==Pseudocode==
+==PSEUDOCODE - fetchPosts()==
 hnote across
 **TRY** 
 
@@ -53,18 +51,14 @@ hnote across
     INVOKE **getPosts()** method
     
     Returns the  **ServiceResult<List<PostBO>>**
+    
+    IF **(result.status code is 200)**
 
-    **IF the the status code is OK**
-    
-        SET the **@isError** is false
-    
-        ASSIGN the **List<PostBO>** to the variable **@originalListOfPosts** and **@tempListOfPosts**
-    
-    **IF status code is Bad Request**
-        
-        SET the serviceResult message in **@errorMessage**
-    
-        SET the **@isError** is true
+    Set the result to the **@originalListOfPosts** and **@tempListOfPosts**.
+
+    ELSE
+
+    Set the **@errorMessage**.
     
 **CATCH**
     
@@ -92,9 +86,9 @@ Caller -> LandingScreenVM: Invoke **sortPosts()**
 activate Caller
 activate LandingScreenVM
 alt #POSITIVERESPONSE (TRY)
-    LandingScreenVM -> PostBOExtention: INVOKE **@tempListOfPosts.sortPostsByDate()**
+    LandingScreenVM -> PostBOExtention: Invoke **@tempListOfPosts.sortPostsByDate()**
     activate PostBOExtention
-    PostBOExtention --> LandingScreenVM : Return sorted **@tempListOfPosts**
+    PostBOExtention --> LandingScreenVM : Return sorted Posts
     deactivate PostBOExtention
     LandingScreenVM --> Caller: Returns 
 
@@ -105,7 +99,7 @@ else #NEGATIVEERESPONSE (CATCH)
     deactivate Caller
 end
 
-==Pseudocode==
+==PSEUDOCODE - sortPosts()==
 hnote across
 **TRY**
 
@@ -138,8 +132,8 @@ Caller -> LandingScreenVM: Invokes **navigateToCreatePostScreen()**
 activate Caller
 activate LandingScreenVM
 alt #POSITIVERESPONSE (TRY)
-LandingScreenVM -> LandingScreenVM : add the **NavigatorPush()** method to the navigation stream
-LandingScreenVM -> Caller: Returns
+LandingScreenVM -> LandingScreenVM : Navigator to Create Post Screen
+LandingScreenVM --> Caller: Returns
 else #NEGATIVEERESPONSE (CATCH)
     LandingScreenVM -> LandingScreenVM : write Exception Logs
     LandingScreenVM --> Caller: Returns
@@ -147,11 +141,11 @@ else #NEGATIVEERESPONSE (CATCH)
     deactivate Caller
 end
 
-==Pseudocode==
+==PSEUDOCODE - navigateToCreatePostScreen()==
 hnote across
 **TRY**
 
-    ADD the **NavigatorPush()** method which has pageconfig of **CreatePost screen** and data to the navgation stream
+    ADD the event **NavigatorPush()** to the navigation stream object along with **parameter(pageconfig:CreatePost screen.pageconfig, data: null)**
 
 **CATCH**
     

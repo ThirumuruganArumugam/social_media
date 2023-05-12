@@ -22,16 +22,9 @@ User -> ResponseScreen: Invoke **initState()**
 activate User
 activate ResponseScreen
 alt #POSITIVERESPONSE (TRY)
-    alt #POSITIVERESPONSE IF (StatusCode is 200)
-        ResponseScreen-> ResponseScreen: Popuntil the context to the **Landing Screen**.
-        ResponseScreen --> User: Returns
-    end
-    alt #POSITIVERESPONSE IF (StatusCode is 200)
-        ResponseScreen-> ResponseScreen: Popuntil the context to the **Landing Screen**.
-        ResponseScreen --> User: Returns
-    end
+    
     ResponseScreen -> ResponseScreen: Add a listener to the navigationStream and listen to the events
-
+    
     alt #POSITIVERESPONSE IF (event is NavigatorPopAndRemoveUntil)
         ResponseScreen-> ResponseScreen: Popuntil the context to the **Landing Screen**.
         ResponseScreen --> User: Returns
@@ -43,12 +36,9 @@ else #NEGATIVEERESPONSE (CATCH)
     deactivate ResponseScreen
     deactivate User
 end
-==Pseudocode==
+==PSEUDOCODE - initState()==
 hnote across
 **TRY**
-
-    INVOKE **Constructor()** using the **ResponseScreenVM** instance and pass the **statusCode** as parameter
-
     Add a listener to the **navigationStream** and listen to the **events**
     
     **IF event is NavigatorPopAndRemoveUntil**
@@ -86,7 +76,7 @@ ResponseScreen --> User: Returns
 deactivate ResponseScreen
 deactivate User
 
-==Pseudocode==
+==PSEUDOCODE - dispose()==
 hnote across
     USING **dispose()** method dispose the **navigationStream**
 end note
@@ -105,7 +95,7 @@ ResponseScreen -> User: Display **LandingScreen**
 deactivate ResponseScreen
 deactivate User
 
-==Pseudocode==
+==PSEUDOCODE - navigateBackToLandingScreen()==
 hnote across
 
 INVOKE **navigateBackToLandingScreen()** method
