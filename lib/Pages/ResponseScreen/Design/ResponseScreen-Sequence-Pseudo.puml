@@ -22,12 +22,14 @@ User -> ResponseScreen: Invoke **initState()**
 activate User
 activate ResponseScreen
 alt #POSITIVERESPONSE (TRY)
-    ResponseScreen -> ResponseScreenVM : Invoke the **Contructor()** and pass\nthe parameter as statusCode.
-    activate ResponseScreenVM
-    ResponseScreenVM --> ResponseScreen : Returns
-    deactivate ResponseScreenVM
-    ResponseScreen --> User : Returns
-    
+    alt #POSITIVERESPONSE IF (StatusCode is 200)
+        ResponseScreen-> ResponseScreen: Popuntil the context to the **Landing Screen**.
+        ResponseScreen --> User: Returns
+    end
+    alt #POSITIVERESPONSE IF (StatusCode is 200)
+        ResponseScreen-> ResponseScreen: Popuntil the context to the **Landing Screen**.
+        ResponseScreen --> User: Returns
+    end
     ResponseScreen -> ResponseScreen: Add a listener to the navigationStream and listen to the events
 
     alt #POSITIVERESPONSE IF (event is NavigatorPopAndRemoveUntil)

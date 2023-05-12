@@ -20,8 +20,8 @@ hide footbox
 Caller -> currentDate: Invoke **showCurrentDate()**
 activate Caller
 activate currentDate
-currentDate -> currentDate: Create a new DateTime using **DateTime.now()** and assign it to a variable
-currentDate -> currentDate: Create a DateFormat using **DateFormat()** and assign it to a variable
+currentDate -> currentDate: Initialize a new DateTime using **DateTime.now()** and assign it to a variable
+currentDate -> currentDate: Initialize a DateFormat using **DateFormat()** and assign it to a variable
 currentDate -> currentDate: Format the DateTime variable using **format()** method
 currentDate -> Caller: Return **current date**
 deactivate Caller
@@ -32,7 +32,7 @@ hnote across
 
 GET the current date using the **DateTime.now()** and assign it to a variable named **now**
 
-USING the **DateFormat()** to format the date as **dd-MM-yyyy**
+USING the **DateFormat()** to format the date as **dd-MM-yyyy** and assign it a variable named **formatter**
 
 FORMAT the DateTime varibale named **now** using the **format()** method
 

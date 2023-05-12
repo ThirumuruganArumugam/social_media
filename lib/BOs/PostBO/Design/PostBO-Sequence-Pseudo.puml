@@ -21,7 +21,7 @@ Caller -> PostBOExtension : Invoke **sortPostsByDate()**
 activate Caller
 activate PostBOExtension
 PostBOExtension -> PostBOExtension : Sort the **@tempListOfPosts**
-PostBOExtension --> Caller : Returns
+PostBOExtension --> Caller : Return **List<PostBO>**
 deactivate PostBOExtension
 deactivate Caller
 
