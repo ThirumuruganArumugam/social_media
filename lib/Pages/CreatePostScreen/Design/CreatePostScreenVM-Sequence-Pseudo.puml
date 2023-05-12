@@ -87,7 +87,7 @@ skinparam sequence{
 
 autonumber 1
 hide footbox
-Caller -> CreatePostScreenVM: Invokes **navigateToResponseScreen()**
+Caller -> CreatePostScreenVM: Invoke **navigateToResponseScreen()**
 activate Caller
 activate CreatePostScreenVM
 alt #POSITIVERESPONSE (TRY)
@@ -130,7 +130,7 @@ skinparam sequence{
 }
 autonumber 1
 hide footbox
-Caller -> CreatePostScreenVM: Invokes **navigateToLandingScreen()**
+Caller -> CreatePostScreenVM: Invoke **navigateToLandingScreen()**
 activate Caller
 activate CreatePostScreenVM
 alt #POSITIVERESPONSE (TRY)
@@ -170,18 +170,28 @@ skinparam sequence{
 
 autonumber 1
 hide footbox
-Caller -> CreatePostScreenVM: Invokes **onTitleChange(String: title)**
+Caller -> CreatePostScreenVM: Invoke **onTitleChange(String: title)**
 activate Caller
 activate CreatePostScreenVM
+alt #POSITIVERESPONSE (TRY)    
     CreatePostScreenVM -> CreatePostScreenVM: add the textfield data to the text field controller.
     CreatePostScreenVM --> Caller: Returns
-deactivate CreatePostScreenVM
-deactivate Caller
+else #NEGATIVEERESPONSE (CATCH)
+    CreatePostScreenVM -> CreatePostScreenVM : Write exception logs
+    CreatePostScreenVM --> Caller: Returns
+    deactivate CreatePostScreenVM
+    deactivate Caller
+end
 ==Pseudocode==
 hnote across
-        Add the textfield data to the text field contorller
-end note
+**TRY**
 
+    Add the textfield data to the text field contorller
+
+**CATCH**
+
+    INVOKE **writeException()** on the exception object ex.
+end note
 
 newpage **CreatePostScreenVM - onDescriptionChange(description: String)**
 !define POSITIVERESPONSE 90EE90
@@ -202,12 +212,24 @@ hide footbox
 Caller -> CreatePostScreenVM: Invoke **onDescriptionChange(description: String)**
 activate Caller
 activate CreatePostScreenVM
+alt #POSITIVERESPONSE (TRY)
     CreatePostScreenVM -> CreatePostScreenVM: add the textfield data to the text field controller.
     CreatePostScreenVM --> Caller: Returns
-deactivate CreatePostScreenVM
-deactivate Caller
+else #NEGATIVEERESPONSE (CATCH)
+    CreatePostScreenVM -> CreatePostScreenVM : Write exception logs
+    CreatePostScreenVM --> Caller: Returns
+    deactivate CreatePostScreenVM
+    deactivate Caller
+end
+
 ==Pseudocode==
 hnote across
-        Add the textfield data to the text field contorller
+**TRY**
+
+    Add the textfield data to the text field contorller
+
+**CATCH**
+
+    INVOKE **writeException()** on the exception object ex.
 end note
 @enduml
