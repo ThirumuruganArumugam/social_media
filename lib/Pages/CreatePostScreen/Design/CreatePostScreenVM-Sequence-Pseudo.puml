@@ -45,7 +45,7 @@ end
 hnote across
 **TRY**
 
-    CREATE an instance newPost for createPost (Post: PostBO)\nand assign it to a variable
+    CREATE an instance newPost for createPost (Post: PostBO) and assign it to a variable
 
     SET **@isLoading** is true
 
@@ -90,7 +90,7 @@ hide footbox
 Caller -> CreatePostScreenVM: Invokes **navigateToResponseScreen()**
 activate Caller
 activate CreatePostScreenVM
-alt TRY
+alt #POSITIVERESPONSE (TRY)
 CreatePostScreenVM -> CreatePostScreenVM : add the **NavigatorPush()** method to the navigation stream\nand assign **statusCode** to the **data** parameter 
 CreatePostScreenVM -> Caller: Returns
 else #NEGATIVEERESPONSE (CATCH)
@@ -133,7 +133,7 @@ hide footbox
 Caller -> CreatePostScreenVM: Invokes **navigateToLandingScreen()**
 activate Caller
 activate CreatePostScreenVM
-alt TRY
+alt #POSITIVERESPONSE (TRY)
 CreatePostScreenVM -> CreatePostScreenVM : add the **NavigatorPop()** method to the navigation stream
 CreatePostScreenVM -> Caller: Returns
 else #NEGATIVEERESPONSE (CATCH)

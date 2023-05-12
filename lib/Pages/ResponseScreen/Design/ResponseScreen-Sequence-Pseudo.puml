@@ -30,7 +30,7 @@ alt #POSITIVERESPONSE (TRY)
     
     ResponseScreen -> ResponseScreen: Add a listener to the navigationStream and listen to the events
 
-    alt #POSITIVERESPONSE event is NavigatorPopAndRemoveUntil
+    alt #POSITIVERESPONSE IF (event is NavigatorPopAndRemoveUntil)
         ResponseScreen-> ResponseScreen: Popuntil the context to the **Landing Screen**.
         ResponseScreen --> User: Returns
     end
@@ -44,12 +44,12 @@ end
 ==Pseudocode==
 hnote across
 **TRY**
-    
+
     INVOKE **Constructor()** using the **ResponseScreenVM** instance and pass the **statusCode** as parameter
 
     Add a listener to the **navigationStream** and listen to the **events**
     
-    **EVENT is NavigatorPopAndRemoveUntil**
+    **IF event is NavigatorPopAndRemoveUntil**
 
         Pop the context to the **Landing** Screen
     
